@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houwy — houwy.space</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-family='monospace' font-size='22' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3Ccircle cx='26' cy='8' r='4' fill='%23c8f135'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1e1e1e;
+    --accent: #c8f135;
+    --accent-dim: rgba(200,241,53,0.08);
+    --text: #e8e8e8;
+    --muted: #555;
+    --muted2: #333;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* GRID LINES */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-inner {
+    width: 100%;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-tag::before {
+    content: '▸ ';
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -3px;
+    color: var(--text);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.25s;
+  }
+
+  h1 .accent { color: var(--accent); }
+  h1 .outline {
+    -webkit-text-stroke: 1px var(--muted2);
+    color: transparent;
+  }
+
+  .hero-desc {
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.55s;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background: #d4f550;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 40px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-line {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.9s;
+  }
+
+  .scroll-line::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--muted2);
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(60px, 8vw, 120px) clamp(20px, 5vw, 80px);
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-label::before { content: '// '; }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .skill-card {
+    background: var(--bg);
+    padding: clamp(24px, 3vw, 36px);
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: var(--surface); }
+
+  .skill-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  .skill-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(15px, 1.5vw, 18px);
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .skill-desc {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .tag.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* SPOILER */
+  .spoiler-block details { }
+
+  .spoiler-block summary.resume-block-title {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+    transition: color 0.2s;
+  }
+
+  .spoiler-block summary.resume-block-title::after {
+    content: '▸';
+    font-size: 10px;
+    color: var(--accent);
+    transition: transform 0.25s ease;
+    margin-left: 12px;
+    flex-shrink: 0;
+  }
+
+  .spoiler-block details[open] summary.resume-block-title {
+    margin-bottom: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spoiler-block details[open] summary.resume-block-title::after {
+    transform: rotate(90deg);
+  }
+
+  .spoiler-block summary::-webkit-details-marker { display: none; }
+  .spoiler-block summary::marker { display: none; }
+  .spoiler-block summary.resume-block-title:hover { color: var(--accent); }
+
+  /* INFOSEC RESUME */
+  .infosec-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .infosec-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .resume-block {
+    background: var(--bg);
+    padding: clamp(24px, 3vw, 36px);
+    transition: background 0.2s;
+  }
+
+  .resume-block:hover { background: var(--surface); }
+
+  .resume-block-title {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .resume-items {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .resume-item.exp .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .exp-period {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .resume-item-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .resume-item-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .infosec-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .infosec-skill-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .infosec-skill-name {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 210px;
+  }
+
+  .skill-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  .resume-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* PROJECTS */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .project-row {
+    background: var(--bg);
+    padding: clamp(20px, 2.5vw, 32px) clamp(20px, 3vw, 36px);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: clamp(12px, 2vw, 24px);
+    align-items: start;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-row:hover { background: var(--surface); }
+  .project-row:hover .proj-arrow { color: var(--accent); transform: translate(3px, -3px); }
+
+  .proj-num {
+    font-size: 11px;
+    color: var(--muted2);
+    padding-top: 4px;
+    min-width: 28px;
+  }
+
+  .proj-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .proj-desc {
+    color: var(--muted);
+    font-size: clamp(12px, 1.2vw, 13px);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .proj-langs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .proj-lang {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .proj-lang::before { content: '#'; opacity: 0.5; }
+
+  .proj-arrow {
+    color: var(--muted2);
+    font-size: 20px;
+    transition: all 0.2s;
+    padding-top: 2px;
+  }
+
+  /* CONTACT */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .contact-text h2 { margin-bottom: 20px; }
+
+  .contact-sub {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    transition: all 0.2s;
+    gap: 16px;
+  }
+
+  .contact-link:last-child { border-bottom: none; }
+
+  .contact-link:hover {
+    background: var(--accent-dim);
+    color: var(--accent);
+    padding-left: 32px;
+  }
+
+  .contact-link-icon { font-size: 16px; }
+  .contact-link span { flex: 1; }
+  .contact-link-arrow { font-size: 12px; opacity: 0.4; }
+
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(200,241,53,0.3);
+    padding: 8px 16px;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 40px;
+  }
+
+  .avail-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px clamp(20px, 5vw, 80px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted2);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* CURSOR ACCENT — desktop only */
+  .cursor-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: difference;
+  }
+
+  /* =====================
+     NAV — hero fluid
+  ===================== */
+  nav {
+    padding: 20px clamp(20px, 5vw, 80px);
+  }
+
+  .hero {
+    padding: clamp(100px, 12vh, 160px) clamp(20px, 5vw, 80px) clamp(60px, 8vh, 100px);
+    max-width: 1400px;
+  }
+
+  /* =====================
+     LARGE SCREENS 1600px+
+  ===================== */
+  @media (min-width: 1600px) {
+    body { font-size: 15px; }
+    .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    h1 { font-size: clamp(110px, 9vw, 160px); }
+  }
+
+  /* =====================
+     TABLET 900–1199px
+  ===================== */
+  @media (max-width: 1199px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-inner { gap: 40px; }
+    .infosec-skill-name { min-width: 170px; }
+  }
+
+  /* =====================
+     MOBILE MENU toggle
+  ===================== */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--muted);
+    transition: all 0.3s;
+  }
+
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 61px;
+    left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    flex-direction: column;
+    padding: 24px clamp(20px, 5vw, 40px);
+    gap: 0;
+  }
+
+  .nav-mobile.open { display: flex; }
+
+  .nav-mobile a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+
+  .nav-mobile a:last-child { border-bottom: none; }
+  .nav-mobile a:hover { color: var(--accent); }
+
+  /* =====================
+     MOBILE ≤768px
+  ===================== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .cursor-dot { display: none; }
+
+    h1 { letter-spacing: -1.5px; }
+
+    .hero-stats {
+      position: relative;
+      right: auto; bottom: auto;
+      flex-direction: row;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: left; }
+    .stat-num { font-size: clamp(28px, 8vw, 40px); }
+
+    .scroll-line { display: none; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+
+    .project-row {
+      grid-template-columns: auto 1fr;
+    }
+    .proj-arrow { display: none; }
+
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .infosec-skill-name { min-width: 130px; font-size: 11px; }
+  }
+
+  /* =====================
+     VERY SMALL ≤400px
+  ===================== */
+  @media (max-width: 400px) {
+    .hero-tag { font-size: 9px; padding: 5px 10px; }
+    .btn { padding: 10px 16px; font-size: 11px; }
+    .tag { font-size: 9px; padding: 3px 8px; }
+    .resume-block-title { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Houwy</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Python</a></li>
+    <li><a href="#infosec">InfoSec</a></li>
+    <li><a href="#projects">Проекты</a></li>
+    <li><a href="#contact">Контакт</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#skills" class="nav-mobile-link">Python</a>
+  <a href="#infosec" class="nav-mobile-link">InfoSec</a>
+  <a href="#projects" class="nav-mobile-link">Проекты</a>
+  <a href="#contact" class="nav-mobile-link">Контакт</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank" class="nav-mobile-link">GitHub ↗</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Python Developer &amp; InfoSec Specialist — houwy.space</div>
+    <h1>
+      Houwy<span class="accent">.</span>
+    </h1>
+    <p class="hero-desc">
+      Пишу чистый Python — от торговых ботов до систем безопасности.<br>
+      Специализируюсь на автоматизации, защите информации и прикладных решениях.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">▸ Смотреть проекты</a>
+      <a href="https://github.com/HouwyTwitch" target="_blank" class="btn btn-ghost">GitHub профиль ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Репозиториев</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3<span>x</span></div>
+      <div class="stat-label">Pull Shark</div>
+    </div>
+  </div>
+
+  <div class="scroll-line">Скролл вниз</div>
+</div>
+
+<!-- PYTHON SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">Python — специализация</div>
+  <h2 class="reveal">Разработка<br>&amp; Автоматизация</h2>
+
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-title">Асинхронность &amp; многопоточность</div>
+      <div class="skill-desc">Высоконагруженные async-решения. Торговые боты, параллельные задачи, эффективная утилизация ресурсов.</div>
+      <div class="skill-tags">
+        <span class="tag active">asyncio</span>
+        <span class="tag active">aiohttp</span>
+        <span class="tag active">threading</span>
+        <span class="tag">multiprocessing</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🕷</div>
+      <div class="skill-title">Парсинг &amp; браузерная автоматизация</div>
+      <div class="skill-desc">Сбор данных любой сложности. Работа с динамическим контентом, SPA, авторизацией и сессиями.</div>
+      <div class="skill-tags">
+        <span class="tag active">Playwright</span>
+        <span class="tag active">Selenium</span>
+        <span class="tag active">pydoll</span>
+        <span class="tag active">undetected-chromedriver</span>
+        <span class="tag">BeautifulSoup</span>
+        <span class="tag">lxml</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🛡</div>
+      <div class="skill-title">Обход антибот-систем</div>
+      <div class="skill-desc">Глубокое понимание принципов работы антибот-защит: TLS fingerprinting, поведенческий анализ, canvas/WebGL. Обход без детектирования.</div>
+      <div class="skill-tags">
+        <span class="tag active">primp</span>
+        <span class="tag active">curl_cffi</span>
+        <span class="tag active">rnet</span>
+        <span class="tag">TLS fingerprint</span>
+        <span class="tag">JA3/JA4</span>
+        <span class="tag">Cloudflare</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-title">Прокси &amp; сетевая инфраструктура</div>
+      <div class="skill-desc">Управление пулами прокси, ротация, балансировка нагрузки. HTTP/SOCKS5, резидентные и дата-центр прокси.</div>
+      <div class="skill-tags">
+        <span class="tag active">Proxy pools</span>
+        <span class="tag active">SOCKS5</span>
+        <span class="tag active">Rotation</span>
+        <span class="tag">Residential</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">API-интеграции &amp; боты</div>
+      <div class="skill-desc">Steam, CS2-маркетплейсы, биржевые API. Полный цикл автоматизации торговли без браузера.</div>
+      <div class="skill-tags">
+        <span class="tag active">Steam API</span>
+        <span class="tag active">CSFloat</span>
+        <span class="tag active">Buff.market</span>
+        <span class="tag">CS.Money</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">📱</div>
+      <div class="skill-title">Мобильная разработка</div>
+      <div class="skill-desc">Kotlin-приложения для Android. Modern SDA — нативная реализация Steam Guard с нуля.</div>
+      <div class="skill-tags">
+        <span class="tag active">Kotlin</span>
+        <span class="tag active">Android</span>
+        <span class="tag">Steam Guard</span>
+        <span class="tag">Cryptography</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOSEC RESUME -->
+<section id="infosec">
+  <div class="section-label reveal">Резюме — Защита информации</div>
+  <h2 class="reveal">InfoSec</h2>
+
+  <div class="infosec-grid reveal">
+
+    <div class="infosec-col">
+      <div class="resume-block spoiler-block">
+        <details>
+        <summary class="resume-block-title">Законодательство &amp; нормативная база</summary>
+        <div class="resume-items" style="margin-top:24px;">
+
+          <div class="resume-item">
+            <div class="resume-item-name">ФЗ № 149-ФЗ</div>
+            <div class="resume-item-desc">«Об информации, информационных технологиях и о защите информации» — базовый закон в сфере ИБ</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ФЗ № 152-ФЗ</div>
+            <div class="resume-item-desc">«О персональных данных» — обработка, хранение, передача ПДн, взаимодействие с Роскомнадзором</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ФЗ № 187-ФЗ</div>
+            <div class="resume-item-desc">«О безопасности критической информационной инфраструктуры» — категорирование объектов КИИ, взаимодействие с ГосСОПКА</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ФЗ № 63-ФЗ</div>
+            <div class="resume-item-desc">«Об электронной подписи» — виды ЭП, удостоверяющие центры, применение КЭП</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ФЗ № 98-ФЗ</div>
+            <div class="resume-item-desc">«О коммерческой тайне» — режим защиты конфиденциальной информации в организации</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСТЭК № 17</div>
+            <div class="resume-item-desc">Требования о защите информации в государственных информационных системах (ГИС)</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСТЭК № 21</div>
+            <div class="resume-item-desc">Состав и содержание мер по обеспечению безопасности ПДн в ИСПДн</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСТЭК № 239</div>
+            <div class="resume-item-desc">Требования по обеспечению безопасности значимых объектов КИИ</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСТЭК № 31</div>
+            <div class="resume-item-desc">Требования к защите информации в АСУ ТП производственных и технологических процессов</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСТЭК № 77 / № 55 / № 76</div>
+            <div class="resume-item-desc">Порядок организации и проведения работ по аттестации объектов информатизации</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Постановление Правительства № 1119</div>
+            <div class="resume-item-desc">Требования к защите ПДн при обработке в ИСПДн — уровни защищённости (УЗ 1–4)</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Постановление Правительства № 127</div>
+            <div class="resume-item-desc">Правила категорирования объектов КИИ, перечень показателей критериев значимости</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСБ № 378</div>
+            <div class="resume-item-desc">Состав и содержание мер по обеспечению безопасности ПДн с использованием СКЗИ</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Приказ ФСБ № 66 / № 796</div>
+            <div class="resume-item-desc">Требования к средствам электронной подписи и к удостоверяющим центрам</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ Р 57580.1 / 57580.2</div>
+            <div class="resume-item-desc">Безопасность финансовых организаций — базовый состав мер и оценка соответствия (ЦБ РФ)</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">Указ Президента № 250</div>
+            <div class="resume-item-desc">О дополнительных мерах по обеспечению ИБ — назначение ответственных, взаимодействие с ФСБ и ФСТЭК</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ISO/IEC 27001 / 27002</div>
+            <div class="resume-item-desc">Международные стандарты СУИБ — системы управления информационной безопасностью</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ 34.601-90 / Р 59793-2021</div>
+            <div class="resume-item-desc">Стадии создания АС: формирование требований, ТЭО, ТЗ, эскизный/технический проект, ввод в эксплуатацию</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ 34.602-89 / Р 59795-2021</div>
+            <div class="resume-item-desc">Содержание технического задания (ТЗ) на создание автоматизированной системы</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ 34.201-2020</div>
+            <div class="resume-item-desc">Виды, комплектность и обозначение документов при создании АС</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ 34.603-92 / Р 59792-2021</div>
+            <div class="resume-item-desc">Виды испытаний АС: предварительные, опытная эксплуатация, приёмочные</div>
+          </div>
+
+          <div class="resume-item">
+            <div class="resume-item-name">ГОСТ 34.003-90</div>
+            <div class="resume-item-desc">Основные термины и определения в области автоматизированных систем</div>
+          </div>
+
+        </div>
+        </details>
+      </div>
+
+      <div class="resume-block">
+        <div class="resume-block-title">Опыт работы</div>
+        <div class="resume-items">
+          <div class="resume-item exp">
+            <div class="exp-header">
+              <div class="resume-item-name">Специалист по защите информации</div>
+              <div class="exp-period">Коммерческий опыт</div>
+            </div>
+            <div class="resume-item-desc">Разработка политик ИБ, аудит систем, работа с ИСПДн, обеспечение соответствия требованиям регуляторов. Взаимодействие с ФСТЭК, подготовка документации.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="resume-block">
+        <div class="resume-block-title">Инструменты &amp; СЗИ</div>
+        <div class="resume-tags-cloud">
+          <span class="tag active">Astra Linux</span>
+          <span class="tag active">Windows</span>
+          <span class="tag active">КриптоПро 4/5</span>
+          <span class="tag active">ViPNet</span>
+          <span class="tag active">Континент TLS</span>
+          <span class="tag active">Dr.Web</span>
+          <span class="tag active">Kaspersky Endpoint Security</span>
+          <span class="tag active">Dallas Lock</span>
+          <span class="tag active">Secret Net Studio</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">Работы</div>
+  <h2 class="reveal">Избранные проекты</h2>
+
+  <div class="projects-list reveal">
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/Modern-SDA" target="_blank">
+      <div class="proj-num">01</div>
+      <div>
+        <div class="proj-name">Modern-SDA</div>
+        <div class="proj-desc">Современная реализация Steam Desktop Authenticator с чистым дизайном. Полная замена оригинального SDA с улучшенным UX и безопасностью.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">Cryptography</span>
+          <span class="proj-lang">Steam API</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/csfloat-auto-sale-and-trade" target="_blank">
+      <div class="proj-num">02</div>
+      <div>
+        <div class="proj-name">CSFloat Auto Bot</div>
+        <div class="proj-desc">Async Python-бот, полностью автоматизирующий продажи CS2 предметов на CSFloat без браузера. Максимальная скорость обработки трейдов.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">asyncio</span>
+          <span class="proj-lang">CSFloat API</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/Modern-SDA-Android" target="_blank">
+      <div class="proj-num">03</div>
+      <div>
+        <div class="proj-name">Modern-SDA Android</div>
+        <div class="proj-desc">Мобильная версия Modern SDA для Android. Нативное Kotlin-приложение с полной поддержкой Steam Guard и управлением аутентификатором.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Kotlin</span>
+          <span class="proj-lang">Android</span>
+          <span class="proj-lang">Steam Guard</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/buff-market-auto-trades" target="_blank">
+      <div class="proj-num">04</div>
+      <div>
+        <div class="proj-name">Buff.market Auto Trades</div>
+        <div class="proj-desc">Автоматическая отправка проданных предметов на Buff.market. Сокращает время обработки сделок до минимума.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">Buff API</span>
+          <span class="proj-lang">Automation</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/csmoney-market-auto-trade" target="_blank">
+      <div class="proj-num">05</div>
+      <div>
+        <div class="proj-name">CS.Money Auto Trade</div>
+        <div class="proj-desc">Автоматическая обработка предложений о продаже на CS.Money. Интеграция с маркетплейсом без ручного вмешательства.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">CS.Money API</span>
+          <span class="proj-lang">Automation</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank">
+      <div class="proj-num">06</div>
+      <div>
+        <div class="proj-name">Pattern Searcher Bot</div>
+        <div class="proj-desc">Бот для поиска и покупки скинов CSGO с определёнными паттернами по выгодной цене. Мониторинг в реальном времени.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">CS:GO API</span>
+          <span class="proj-lang">Pattern Analysis</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="project-row" href="https://github.com/HouwyTwitch/CSGOFloatMaster" target="_blank">
+      <div class="proj-num">07</div>
+      <div>
+        <div class="proj-name">CSGOFloatMaster</div>
+        <div class="proj-desc">GPU-ускоренный инструмент на CUDA для перебора комбинаций контрактов в CS:GO. Находит оптимальные наборы скинов с предсказуемым float-результатом — задача, нереальная для CPU по скорости.</div>
+        <div class="proj-langs">
+          <span class="proj-lang">Python</span>
+          <span class="proj-lang">CUDA</span>
+          <span class="proj-lang">GPU Computing</span>
+          <span class="proj-lang">CS:GO</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+  </div>
+</section>
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-text">
+      <div class="section-label reveal">Связаться</div>
+      <h2 class="reveal">Давайте<br>работать<br>вместе</h2>
+      <div class="avail-badge reveal">
+        <div class="avail-dot"></div>
+        Открыт для предложений
+      </div>
+      <p class="contact-sub reveal">
+        Есть задача по автоматизации, безопасности или Python-разработке? Пишите — разберёмся.
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="contact-links">
+        <a href="https://github.com/HouwyTwitch" target="_blank" class="contact-link">
+          <span class="contact-link-icon">⌥</span>
+          <span>github.com/HouwyTwitch</span>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+        <a href="https://t.me/houwy" target="_blank" class="contact-link">
+          <span class="contact-link-icon">✈</span>
+          <span>@houwy</span>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Houwy</div>
+  <div class="footer-copy">houwy.space — © 2026</div>
+</footer>
+
+<script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('navMobile');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navMobile.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navMobile.classList.remove('open');
+    });
+  });
+
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 3 + 'px';
+    cursor.style.top = e.clientY - 3 + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
