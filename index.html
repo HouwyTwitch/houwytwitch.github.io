@@ -439,37 +439,37 @@ footer {
   <div class="skills-grid reveal">
     <div class="skill-card">
       <div class="skill-icon">⚡</div>
-      <div class="skill-title">Async &amp; Concurrency</div>
+      <div class="skill-title" data-i18n="skill.async">Async &amp; Concurrency</div>
       <div class="skill-desc">High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.</div>
       <div class="skill-tags"><span class="tag hi">asyncio</span><span class="tag hi">aiohttp</span><span class="tag hi">threading</span><span class="tag">multiprocessing</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🕷</div>
-      <div class="skill-title">Scraping &amp; Browser Automation</div>
+      <div class="skill-title" data-i18n="skill.scraping">Scraping &amp; Browser Automation</div>
       <div class="skill-desc">Data collection at any scale. Dynamic content, SPAs, auth flows and session management.</div>
       <div class="skill-tags"><span class="tag hi">Playwright</span><span class="tag hi">Selenium</span><span class="tag hi">pydoll</span><span class="tag hi">undetected-chromedriver</span><span class="tag">BeautifulSoup</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🛡</div>
-      <div class="skill-title">Anti-Bot Bypass</div>
+      <div class="skill-title" data-i18n="skill.antibot">Anti-Bot Bypass</div>
       <div class="skill-desc">Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.</div>
       <div class="skill-tags"><span class="tag hi">primp</span><span class="tag hi">curl_cffi</span><span class="tag hi">JA3/JA4</span><span class="tag">Cloudflare</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🌐</div>
-      <div class="skill-title">Proxy Infrastructure</div>
+      <div class="skill-title" data-i18n="skill.proxy">Proxy Infrastructure</div>
       <div class="skill-desc">Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.</div>
       <div class="skill-tags"><span class="tag hi">Proxy pools</span><span class="tag hi">SOCKS5</span><span class="tag hi">Rotation</span><span class="tag">Residential</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🤖</div>
-      <div class="skill-title">API Integration &amp; Bots</div>
+      <div class="skill-title" data-i18n="skill.api">API Integration &amp; Bots</div>
       <div class="skill-desc">Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.</div>
       <div class="skill-tags"><span class="tag hi">Steam API</span><span class="tag hi">CSFloat</span><span class="tag hi">Buff.market</span><span class="tag">CS.Money</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">📱</div>
-      <div class="skill-title">Mobile Development</div>
+      <div class="skill-title" data-i18n="skill.mobile">Mobile Development</div>
       <div class="skill-desc">Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.</div>
       <div class="skill-tags"><span class="tag hi">Kotlin</span><span class="tag hi">Jetpack Compose</span><span class="tag hi">Android</span><span class="tag">Cryptography</span></div>
     </div>
@@ -482,7 +482,7 @@ footer {
   <h2 class="reveal" data-i18n="infosec.h2">InfoSec</h2>
   <div class="infosec-grid reveal">
     <div class="resume-block">
-      <div class="rbt" id="legisToggle">Legislation &amp; Regulatory Framework<span class="rbt-arrow">▸</span></div>
+      <div class="rbt" id="legisToggle"><span data-i18n="infosec.legis">Legislation &amp; Regulatory Framework</span><span class="rbt-arrow">▸</span></div>
       <div id="legisContent" style="display:none">
         <div class="resume-items">
           <div class="resume-item"><div class="rin">ФЗ № 149-ФЗ / 152-ФЗ / 187-ФЗ</div><div class="rid">Information protection, personal data processing, critical information infrastructure security</div></div>
@@ -497,11 +497,11 @@ footer {
       </div>
     </div>
     <div class="resume-block">
-      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;">Work Experience</div>
+      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;"><span data-i18n="infosec.exp">Work Experience</span></div>
       <div class="resume-items">
         <div class="resume-item">
           <div class="exp-header">
-            <div class="rin">Information Security Specialist</div>
+            <div class="rin" data-i18n="infosec.role">Information Security Specialist</div>
             <div class="exp-period">Commercial</div>
           </div>
           <div class="rid">IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.</div>
@@ -509,7 +509,7 @@ footer {
       </div>
     </div>
     <div class="resume-block">
-      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;">Tools &amp; Security Products</div>
+      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;"><span data-i18n="infosec.tools">Tools &amp; Security Products</span></div>
       <div class="tags-cloud">
         <span class="tag hi">Astra Linux</span><span class="tag hi">КриптоПро 4/5</span><span class="tag hi">ViPNet</span>
         <span class="tag hi">Континент TLS</span><span class="tag hi">Dr.Web</span>
@@ -700,7 +700,13 @@ const translations = {
     'hero.cta1': '▸ View Projects', 'hero.cta2': 'GitHub Profile ↗',
     'meta.repos': 'Repositories', 'meta.pull': 'Pull Shark',
     'skills.label': 'Specialization', 'skills.h2': 'Python & Automation',
+    'skill.async': 'Async & Concurrency', 'skill.scraping': 'Scraping & Browser Automation',
+    'skill.antibot': 'Anti-Bot Bypass', 'skill.proxy': 'Proxy Infrastructure',
+    'skill.api': 'API Integration & Bots', 'skill.mobile': 'Mobile Development',
     'infosec.label': 'Resume', 'infosec.h2': 'InfoSec',
+    'infosec.legis': 'Legislation & Regulatory Framework',
+    'infosec.exp': 'Work Experience', 'infosec.tools': 'Tools & Security Products',
+    'infosec.role': 'Information Security Specialist',
     'projects.label': 'Work', 'projects.h2': 'Selected Projects',
     'contact.label': 'Get in touch', 'contact.h2': "Let's work<br> together",
     'contact.badge': 'Available for projects',
@@ -713,7 +719,13 @@ const translations = {
     'hero.cta1': '▸ Смотреть проекты', 'hero.cta2': 'GitHub профиль ↗',
     'meta.repos': 'Репозиториев', 'meta.pull': 'Pull Shark',
     'skills.label': 'Специализация', 'skills.h2': 'Python и автоматизация',
+    'skill.async': 'Асинхронность и параллелизм', 'skill.scraping': 'Парсинг и браузерная автоматизация',
+    'skill.antibot': 'Обход антибот-систем', 'skill.proxy': 'Прокси-инфраструктура',
+    'skill.api': 'API-интеграции и боты', 'skill.mobile': 'Мобильная разработка',
     'infosec.label': 'Резюме', 'infosec.h2': 'InfoSec',
+    'infosec.legis': 'Законодательство и нормативная база',
+    'infosec.exp': 'Опыт работы', 'infosec.tools': 'Инструменты и СЗИ',
+    'infosec.role': 'Специалист по защите информации',
     'projects.label': 'Работы', 'projects.h2': 'Избранные проекты',
     'contact.label': 'Связаться', 'contact.h2': 'Давайте<br> работать<br> вместе',
     'contact.badge': 'Открыт для предложений',
