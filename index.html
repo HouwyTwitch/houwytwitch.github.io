@@ -378,7 +378,7 @@ footer {
     <li><a href="#infosec" data-i18n="nav.infosec">InfoSec</a></li>
     <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
-    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank" data-i18n="nav.github">GitHub ↗</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px;">
     <button class="lang-btn" id="langBtn" onclick="toggleLang()">
@@ -392,7 +392,7 @@ footer {
   <a href="#infosec" data-i18n="nav.infosec">InfoSec</a>
   <a href="#projects" data-i18n="nav.projects">Projects</a>
   <a href="#contact" data-i18n="nav.contact">Contact</a>
-  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank" data-i18n="nav.github">GitHub ↗</a>
 </div>
 
 <!-- HERO -->
@@ -440,37 +440,37 @@ footer {
     <div class="skill-card">
       <div class="skill-icon">⚡</div>
       <div class="skill-title" data-i18n="skill.async">Async &amp; Concurrency</div>
-      <div class="skill-desc">High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.</div>
+      <div class="skill-desc" data-i18n="skill.async.desc">High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.</div>
       <div class="skill-tags"><span class="tag hi">asyncio</span><span class="tag hi">aiohttp</span><span class="tag hi">threading</span><span class="tag">multiprocessing</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🕷</div>
       <div class="skill-title" data-i18n="skill.scraping">Scraping &amp; Browser Automation</div>
-      <div class="skill-desc">Data collection at any scale. Dynamic content, SPAs, auth flows and session management.</div>
+      <div class="skill-desc" data-i18n="skill.scraping.desc">Data collection at any scale. Dynamic content, SPAs, auth flows and session management.</div>
       <div class="skill-tags"><span class="tag hi">Playwright</span><span class="tag hi">Selenium</span><span class="tag hi">pydoll</span><span class="tag hi">undetected-chromedriver</span><span class="tag">BeautifulSoup</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🛡</div>
       <div class="skill-title" data-i18n="skill.antibot">Anti-Bot Bypass</div>
-      <div class="skill-desc">Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.</div>
+      <div class="skill-desc" data-i18n="skill.antibot.desc">Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.</div>
       <div class="skill-tags"><span class="tag hi">primp</span><span class="tag hi">curl_cffi</span><span class="tag hi">JA3/JA4</span><span class="tag">Cloudflare</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🌐</div>
       <div class="skill-title" data-i18n="skill.proxy">Proxy Infrastructure</div>
-      <div class="skill-desc">Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.</div>
+      <div class="skill-desc" data-i18n="skill.proxy.desc">Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.</div>
       <div class="skill-tags"><span class="tag hi">Proxy pools</span><span class="tag hi">SOCKS5</span><span class="tag hi">Rotation</span><span class="tag">Residential</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🤖</div>
       <div class="skill-title" data-i18n="skill.api">API Integration &amp; Bots</div>
-      <div class="skill-desc">Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.</div>
+      <div class="skill-desc" data-i18n="skill.api.desc">Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.</div>
       <div class="skill-tags"><span class="tag hi">Steam API</span><span class="tag hi">CSFloat</span><span class="tag hi">Buff.market</span><span class="tag">CS.Money</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">📱</div>
       <div class="skill-title" data-i18n="skill.mobile">Mobile Development</div>
-      <div class="skill-desc">Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.</div>
+      <div class="skill-desc" data-i18n="skill.mobile.desc">Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.</div>
       <div class="skill-tags"><span class="tag hi">Kotlin</span><span class="tag hi">Jetpack Compose</span><span class="tag hi">Android</span><span class="tag">Cryptography</span></div>
     </div>
   </div>
@@ -504,7 +504,7 @@ footer {
             <div class="rin" data-i18n="infosec.role">Information Security Specialist</div>
             <div class="exp-period">Commercial</div>
           </div>
-          <div class="rid">IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.</div>
+          <div class="rid" data-i18n="infosec.role.desc">IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.</div>
         </div>
       </div>
     </div>
@@ -605,9 +605,9 @@ footer {
 
 <!-- TWEAKS -->
 <div id="tweaks-panel">
-  <h3>Tweaks</h3>
+      <h3 data-i18n="tweaks.title">Tweaks</h3>
   <div class="tweak-row">
-    <div class="tweak-label">Accent Color</div>
+    <div class="tweak-label" data-i18n="tweaks.accent">Accent Color</div>
     <div class="tweak-swatches">
       <div class="color-swatch active" data-color="#c8f135" style="background:#c8f135" title="Lime"></div>
       <div class="color-swatch" data-color="#2dd4bf" style="background:#2dd4bf" title="Teal"></div>
@@ -616,17 +616,17 @@ footer {
     </div>
   </div>
   <div class="tweak-row">
-    <div class="tweak-label">Projects Layout</div>
+    <div class="tweak-label" data-i18n="tweaks.projectsLayout">Projects Layout</div>
     <div class="tweak-options">
-      <button class="tweak-opt active" data-layout="grid">Grid</button>
-      <button class="tweak-opt" data-layout="rows">Rows</button>
+      <button class="tweak-opt active" data-layout="grid" data-i18n="tweaks.grid">Grid</button>
+      <button class="tweak-opt" data-layout="rows" data-i18n="tweaks.rows">Rows</button>
     </div>
   </div>
   <div class="tweak-row">
-    <div class="tweak-label">Hero Layout</div>
+    <div class="tweak-label" data-i18n="tweaks.heroLayout">Hero Layout</div>
     <div class="tweak-options">
-      <button class="tweak-opt active" data-hero="split">Split</button>
-      <button class="tweak-opt" data-hero="centered">Centered</button>
+      <button class="tweak-opt active" data-hero="split" data-i18n="tweaks.split">Split</button>
+      <button class="tweak-opt" data-hero="centered" data-i18n="tweaks.centered">Centered</button>
     </div>
   </div>
 </div>
@@ -694,7 +694,7 @@ window.parent.postMessage({type:'__edit_mode_available'},'*');
 // --- i18n ---
 const translations = {
   en: {
-    'nav.skills': 'Skills', 'nav.infosec': 'InfoSec', 'nav.projects': 'Projects', 'nav.contact': 'Contact',
+    'nav.skills': 'Skills', 'nav.infosec': 'InfoSec', 'nav.projects': 'Projects', 'nav.contact': 'Contact', 'nav.github': 'GitHub ↗',
     'hero.tag': 'Python Dev & InfoSec Specialist',
     'hero.desc': 'Building tools that work while you sleep.<br><strong>Trading automation</strong>, anti-bot bypass,<br>and information security.',
     'hero.cta1': '▸ View Projects', 'hero.cta2': 'GitHub Profile ↗',
@@ -703,17 +703,27 @@ const translations = {
     'skill.async': 'Async & Concurrency', 'skill.scraping': 'Scraping & Browser Automation',
     'skill.antibot': 'Anti-Bot Bypass', 'skill.proxy': 'Proxy Infrastructure',
     'skill.api': 'API Integration & Bots', 'skill.mobile': 'Mobile Development',
+    'skill.async.desc': 'High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.',
+    'skill.scraping.desc': 'Data collection at any scale. Dynamic content, SPAs, auth flows and session management.',
+    'skill.antibot.desc': 'Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.',
+    'skill.proxy.desc': 'Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.',
+    'skill.api.desc': 'Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.',
+    'skill.mobile.desc': 'Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.',
     'infosec.label': 'Resume', 'infosec.h2': 'InfoSec',
     'infosec.legis': 'Legislation & Regulatory Framework',
     'infosec.exp': 'Work Experience', 'infosec.tools': 'Tools & Security Products',
     'infosec.role': 'Information Security Specialist',
+    'infosec.role.desc': 'IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.',
     'projects.label': 'Work', 'projects.h2': 'Selected Projects',
     'contact.label': 'Get in touch', 'contact.h2': "Let's work<br> together",
     'contact.badge': 'Available for projects',
     'contact.sub': "Have a task in automation, security, or Python development? Reach out — let's figure it out.",
+    'tweaks.title': 'Tweaks', 'tweaks.accent': 'Accent Color', 'tweaks.projectsLayout': 'Projects Layout',
+    'tweaks.grid': 'Grid', 'tweaks.rows': 'Rows', 'tweaks.heroLayout': 'Hero Layout',
+    'tweaks.split': 'Split', 'tweaks.centered': 'Centered',
   },
   ru: {
-    'nav.skills': 'Навыки', 'nav.infosec': 'ИнфоБез', 'nav.projects': 'Проекты', 'nav.contact': 'Контакт',
+    'nav.skills': 'Навыки', 'nav.infosec': 'ИнфоБез', 'nav.projects': 'Проекты', 'nav.contact': 'Контакты', 'nav.github': 'GitHub ↗',
     'hero.tag': 'Python-разработчик и специалист по ИБ',
     'hero.desc': 'Создаю инструменты, которые работают пока вы спите.<br><strong>Торговая автоматизация</strong>, обход антибот-систем<br>и информационная безопасность.',
     'hero.cta1': '▸ Смотреть проекты', 'hero.cta2': 'GitHub профиль ↗',
@@ -722,14 +732,24 @@ const translations = {
     'skill.async': 'Асинхронность и параллелизм', 'skill.scraping': 'Парсинг и браузерная автоматизация',
     'skill.antibot': 'Обход антибот-систем', 'skill.proxy': 'Прокси-инфраструктура',
     'skill.api': 'API-интеграции и боты', 'skill.mobile': 'Мобильная разработка',
+    'skill.async.desc': 'Высоконагруженные асинхронные решения: торговые боты, параллельные задачи и эффективное использование ресурсов.',
+    'skill.scraping.desc': 'Сбор данных любого масштаба: динамический контент, SPA, авторизация и управление сессиями.',
+    'skill.antibot.desc': 'Глубокая экспертиза в TLS-отпечатках, поведенческом анализе и обходе canvas/WebGL-проверок. Незаметно в масштабе.',
+    'skill.proxy.desc': 'Управление пулами прокси, ротация и балансировка нагрузки. HTTP/SOCKS5, резидентские и дата-центровые прокси.',
+    'skill.api.desc': 'Интеграции со Steam, CS2 маркетплейсами и exchange API. Полная торговая автоматизация без браузера.',
+    'skill.mobile.desc': 'Нативная Android-разработка на Kotlin. Modern SDA — полная реализация Steam Guard с нуля.',
     'infosec.label': 'Резюме', 'infosec.h2': 'InfoSec',
     'infosec.legis': 'Законодательство и нормативная база',
     'infosec.exp': 'Опыт работы', 'infosec.tools': 'Инструменты и СЗИ',
     'infosec.role': 'Специалист по защите информации',
+    'infosec.role.desc': 'Разработка политик ИБ, аудит систем, сопровождение ИСПДн и соответствие требованиям регуляторов. Взаимодействие с ФСТЭК и подготовка технической документации.',
     'projects.label': 'Работы', 'projects.h2': 'Избранные проекты',
     'contact.label': 'Связаться', 'contact.h2': 'Давайте<br> работать<br> вместе',
     'contact.badge': 'Открыт для предложений',
     'contact.sub': 'Есть задача по автоматизации, безопасности или Python-разработке? Пишите — разберёмся.',
+    'tweaks.title': 'Настройки', 'tweaks.accent': 'Акцентный цвет', 'tweaks.projectsLayout': 'Макет проектов',
+    'tweaks.grid': 'Сетка', 'tweaks.rows': 'Список', 'tweaks.heroLayout': 'Макет главного блока',
+    'tweaks.split': 'Сплит', 'tweaks.centered': 'По центру',
   }
 };
 let currentLang = localStorage.getItem('lang') || 'en';
