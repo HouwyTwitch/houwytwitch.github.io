@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Searcher Bot — Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-family='monospace' font-size='22' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3Ccircle cx='26' cy='8' r='4' fill='%23c8f135'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/project.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="cursor-dot" id="cursor"></div>
+
+<nav>
+  <a class="nav-back" href="../index.html">Projects</a>
+  <a class="nav-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <a class="nav-gh" href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-number"><span>06</span> / 07 — Python · Market Bot</div>
+  <h1 class="proj-title">Pattern<br>Searcher Bot</h1>
+  <p class="proj-oneliner">A real-time bot that monitors the CS:GO market for skins with specific pattern indices at optimal prices. Finds rare patterns — low fade percentages, blue gems, specific Case Hardened patterns — and auto-buys before anyone else can.</p>
+  <div class="proj-hero-footer">
+    <div class="proj-tags">
+      <span class="tag hi">Python</span>
+      <span class="tag hi">CS:GO API</span>
+      <span class="tag hi">Pattern Analysis</span>
+      <span class="tag hi">Market Monitoring</span>
+      <span class="tag">Auto-buy</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank" class="btn btn-primary">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Overview</div>
+      <h3>What it does</h3>
+      <p>In CS:GO, certain skins have a <strong>pattern index</strong> (seed) that determines their visual appearance. Some patterns are extremely rare — specific Case Hardened blue gem configurations, maximum Fade percentages, or low-numbered Marble Fades. These skins sell for multiples of the item's base price.</p>
+      <p>This bot continuously monitors the market for these specific patterns and purchases them the moment they're listed at a price below a configured threshold — before any human buyer could react.</p>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">How It Works</div>
+      <h3>Detection &amp; purchase flow</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div class="step-content"><div class="step-title">Define targets</div><div class="step-desc">Configure specific pattern indices and maximum purchase prices for each skin type you want to hunt.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-content"><div class="step-title">Continuous market scan</div><div class="step-desc">Polls the CS:GO market API in real time, checking new listings against the target pattern list.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-content"><div class="step-title">Pattern analysis</div><div class="step-desc">Fetches inspect link data for each matching listing to verify the actual pattern index before purchasing.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-content"><div class="step-title">Auto-buy</div><div class="step-desc">Executes the purchase automatically when a target pattern appears at or below the configured price threshold.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Installation</div>
+      <h3>Getting started</h3>
+      <div class="code-block">
+        <div class="code-bar">bash</div>
+        <pre>git clone https://github.com/HouwyTwitch/CSGOPatternSearcherBOT
+cd CSGOPatternSearcherBOT
+pip install -r requirements.txt
+python main.py</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Tech Stack</div>
+      <div class="sidebar-tags">
+        <span class="tag hi">Python</span>
+        <span class="tag hi">CS:GO Market API</span>
+        <span class="tag hi">Pattern indexing</span>
+        <span class="tag">Real-time polling</span>
+        <span class="tag">Auto-buy logic</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Target patterns</div>
+      <div class="sidebar-tags">
+        <span class="tag hi">Case Hardened Blue Gem</span>
+        <span class="tag hi">Fade %</span>
+        <span class="tag hi">Marble Fade</span>
+        <span class="tag">Custom indices</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank"><span>GitHub Repository</span><span class="sidebar-link-arrow">↗</span></a>
+        <a class="sidebar-link" href="float-master.html"><span>CSGOFloatMaster →</span><span class="sidebar-link-arrow">→</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">Houwy<span>.</span></a>
+  <div class="footer-copy">houwy.space — © 2026</div>
+</footer>
+<script>
+const cur=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{ cur.style.left=e.clientX-2.5+'px'; cur.style.top=e.clientY-2.5+'px'; });
+const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); },{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

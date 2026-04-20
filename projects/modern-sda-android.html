@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern SDA Android — Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-family='monospace' font-size='22' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3Ccircle cx='26' cy='8' r='4' fill='%23c8f135'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/project.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="cursor-dot" id="cursor"></div>
+
+<nav>
+  <a class="nav-back" href="../index.html">Projects</a>
+  <a class="nav-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <a class="nav-gh" href="https://github.com/HouwyTwitch/Modern-SDA-Android" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-number"><span>03</span> / 07 — Kotlin · Android</div>
+  <h1 class="proj-title">Modern SDA<br>Android</h1>
+  <p class="proj-oneliner">A native Android Steam authenticator built with Jetpack Compose. Manage multiple accounts, generate TOTP codes, and approve or decline trade and market confirmations — all from your phone, with no third-party servers.</p>
+  <div class="proj-hero-footer">
+    <div class="proj-tags">
+      <span class="tag hi">Kotlin</span>
+      <span class="tag hi">Jetpack Compose</span>
+      <span class="tag hi">Material 3</span>
+      <span class="tag hi">Room</span>
+      <span class="tag hi">Hilt</span>
+      <span class="tag">Steam Guard</span>
+      <span class="tag">TOTP</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/Modern-SDA-Android" target="_blank" class="btn btn-primary">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-preview reveal">
+      <div class="screenshots-mobile">
+        <img src="https://github.com/user-attachments/assets/a47a915e-0368-4941-94d8-faaa87cabcae" alt="Accounts screen" loading="lazy">
+        <img src="https://github.com/user-attachments/assets/91105ade-2f75-4bdc-9f0e-00b9c3d887f0" alt="TOTP codes" loading="lazy">
+        <img src="https://github.com/user-attachments/assets/fc6c2a10-560e-405b-9d18-c481ab5f8b9d" alt="Confirmations list" loading="lazy">
+        <img src="https://github.com/user-attachments/assets/db69f2e1-fffc-4240-81d8-2be7029eac63" alt="Confirmation detail" loading="lazy">
+        <img src="https://github.com/user-attachments/assets/fa2a3ff8-895b-4b0c-81d1-b9d0ac655271" alt="Settings" loading="lazy">
+        <img src="https://github.com/user-attachments/assets/84c90d70-ec5d-4b56-b2db-cb68da55a08a" alt="Add account" loading="lazy">
+      </div>
+      <div class="screenshot-caption">Jetpack Compose — accounts · TOTP · confirmations · settings</div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Overview</div>
+      <h3>What it does</h3>
+      <p>Modern SDA Android is the mobile companion to the desktop authenticator. It uses the standard <strong>.mafile format</strong> so any account already set up in the original SDA works instantly. All traffic goes directly to Steam's official APIs — no third-party servers, no telemetry.</p>
+      <p>Built with <strong>Jetpack Compose</strong> and Material 3, it supports dynamic color theming. Device backups are disabled to prevent credentials appearing in cloud backups, and release builds strip all debug logging.</p>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Features</div>
+      <h3>Key capabilities</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div class="step-content"><div class="step-title">Multi-account support</div><div class="step-desc">Import any number of .mafile accounts. Switch between them instantly.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-content"><div class="step-title">TOTP with animated countdown</div><div class="step-desc">30-second Steam Guard codes with a visual countdown ring — always visible.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-content"><div class="step-title">Trade &amp; market confirmations</div><div class="step-desc">View, accept, or decline confirmations with swipe-to-refresh. Auto-refresh in the background.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-content"><div class="step-title">Auto session refresh</div><div class="step-desc">Silently re-authenticates using stored refresh tokens — no repeated password prompts.</div></div></div>
+        <div class="step"><div class="step-num">05</div><div class="step-content"><div class="step-title">Material 3 UI</div><div class="step-desc">Dynamic color, dark/light theme, per-device theming. Targets Android 11+ (API 31).</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Installation</div>
+      <h3>Building from source</h3>
+      <p>Requires Android Studio Ladybug (2024.2+) and JDK 17. The app targets API 35 and runs on API 31+.</p>
+      <div class="code-block">
+        <div class="code-bar">bash</div>
+        <pre><span class="cm"># Clone and open in Android Studio</span>
+git clone https://github.com/HouwyTwitch/Modern-SDA-Android.git
+
+<span class="cm"># Build a debug APK</span>
+./gradlew assembleDebug
+
+<span class="cm"># Output</span>
+app/build/outputs/apk/debug/app-debug.apk</pre>
+      </div>
+      <p>To import an account: tap <strong>+</strong>, paste your <code>.mafile</code> JSON content, optionally enter your Steam password for auto re-login, then tap Import.</p>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label">Architecture</div>
+      <h3>Project structure</h3>
+      <div class="code-block">
+        <div class="code-bar">tree</div>
+        <pre>app/
+├── data/
+│   ├── db/          <span class="cm">Room database (accounts)</span>
+│   ├── model/       <span class="cm">Account, Confirmation, MafileData</span>
+│   ├── preferences/ <span class="cm">DataStore (settings)</span>
+│   └── repository/  <span class="cm">AccountRepository, ConfirmationRepository</span>
+├── di/              <span class="cm">Hilt modules</span>
+├── domain/steam/    <span class="cm">SteamLogin, SteamTotp, SteamConfirmations</span>
+└── ui/
+    ├── screens/     <span class="cm">Accounts, Confirmations, Settings (MVVM)</span>
+    ├── components/  <span class="cm">AccountCard, TotpCodeDisplay</span>
+    └── theme/       <span class="cm">Material 3 theme</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Tech Stack</div>
+      <div class="sidebar-tags">
+        <span class="tag hi">Kotlin</span>
+        <span class="tag hi">Jetpack Compose</span>
+        <span class="tag hi">Material 3</span>
+        <span class="tag hi">Room DB</span>
+        <span class="tag hi">Hilt DI</span>
+        <span class="tag hi">DataStore</span>
+        <span class="tag">Compose Navigation</span>
+        <span class="tag">MVVM</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Requirements</div>
+      <div class="sidebar-tags">
+        <span class="tag">Android 11+ (API 31)</span>
+        <span class="tag">JDK 17</span>
+        <span class="tag">Android Studio Ladybug</span>
+        <span class="tag">.mafile from SDA</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/Modern-SDA-Android" target="_blank"><span>GitHub Repository</span><span class="sidebar-link-arrow">↗</span></a>
+        <a class="sidebar-link" href="modern-sda.html"><span>Desktop version →</span><span class="sidebar-link-arrow">→</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">Houwy<span>.</span></a>
+  <div class="footer-copy">houwy.space — © 2026</div>
+</footer>
+<script>
+const cur=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{ cur.style.left=e.clientX-2.5+'px'; cur.style.top=e.clientY-2.5+'px'; });
+const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); },{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
