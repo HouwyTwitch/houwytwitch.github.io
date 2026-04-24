@@ -182,9 +182,20 @@ img { max-width: 100%; display: block; }
   background: var(--md-surface);
   transition: background 0.35s var(--md-motion-standard), box-shadow 0.25s var(--md-motion-standard);
 }
+.top-bar::after {
+  content: '';
+  position: absolute; top: 100%; left: 0; right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--md-surface), transparent);
+  pointer-events: none;
+  transition: opacity 0.35s var(--md-motion-standard);
+}
 .top-bar.scrolled {
   background: var(--md-surface-container);
   box-shadow: var(--md-elev-2);
+}
+.top-bar.scrolled::after {
+  opacity: 0;
 }
 
 .top-bar-logo {
