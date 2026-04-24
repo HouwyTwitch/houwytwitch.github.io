@@ -297,7 +297,6 @@ img { max-width: 100%; display: block; }
   display: grid; grid-template-columns: 1fr 1fr; align-items: center;
   gap: 40px; padding: 80px clamp(20px,5vw,64px) 60px;
   max-width: 1400px; margin: 0 auto;
-  overflow: hidden;
 }
 
 /* Animated glow orbs behind hero */
