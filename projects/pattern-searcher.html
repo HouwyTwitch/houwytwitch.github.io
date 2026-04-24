@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Searcher Bot - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills" data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn"><button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button><button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button></div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow"><a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a></div>
+  <div class="proj-number"><span class="n">06</span> / 07 - Python · Market Bot</div>
+  <h1 class="proj-title" data-i18n="pat.title">Pattern<br>Searcher Bot</h1>
+  <p class="proj-oneliner" data-i18n="pat.one">A real-time bot that monitors the CS:GO market for skins with specific pattern indices at optimal prices - and auto-buys before anyone else can.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Python</span><span class="chip filled">CS:GO API</span>
+      <span class="chip secondary">Pattern Analysis</span><span class="chip secondary">Real-time polling</span>
+      <span class="chip surface">Auto-buy</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="pat.ov.b1">In CS:GO, certain skins have a pattern index (seed) that determines their visual appearance. Some patterns are extremely rare - specific Case Hardened blue gem configurations, maximum Fade percentages. These skins sell for multiples of the base price.</p>
+        <p data-i18n="pat.ov.b2">This bot continuously monitors the market for these specific patterns and purchases them the moment they're listed below a configured threshold.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.howit">How it works</div>
+      <h3 class="proj-section-title" data-i18n="pat.hw.title">Detection &amp; purchase flow</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="pat.s1t">Define targets</div><div class="step-desc" data-i18n="pat.s1d">Configure specific pattern indices and maximum purchase prices per skin type.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="pat.s2t">Continuous scan</div><div class="step-desc" data-i18n="pat.s2d">Polls the CS:GO market API in real time, checking new listings against the target list.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="pat.s3t">Pattern analysis</div><div class="step-desc" data-i18n="pat.s3d">Fetches inspect link data to verify the actual pattern index before purchasing.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="pat.s4t">Auto-buy</div><div class="step-desc" data-i18n="pat.s4d">Executes the purchase automatically when a target pattern appears at or below threshold.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title">Getting started</h3>
+      <div class="code-block"><div class="code-bar">bash</div><pre>git clone https://github.com/HouwyTwitch/CSGOPatternSearcherBOT
+pip install -r requirements.txt
+python main.py</pre></div>
+    </div>
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Python</span><span class="chip filled">CS:GO Market API</span>
+        <span class="chip secondary">Pattern indexing</span>
+        <span class="chip surface">Real-time polling</span><span class="chip surface">Auto-buy</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.patterns">Target Patterns</div>
+      <div class="chips-row">
+        <span class="chip filled">Blue Gem</span><span class="chip filled">Fade %</span>
+        <span class="chip secondary">Marble Fade</span><span class="chip surface">Custom indices</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/CSGOPatternSearcherBOT" target="_blank"><span data-i18n="proj.viewgithub">GitHub Repository</span><span class="sidebar-link-arr">↗</span></a>
+        <a class="sidebar-link" href="float-master.html"><span>CSGOFloatMaster →</span><span class="sidebar-link-arr">→</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

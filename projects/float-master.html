@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSGOFloatMaster - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills" data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch/CSGOFloatMaster" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn"><button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button><button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button></div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow"><a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a></div>
+  <div class="proj-number"><span class="n">07</span> / 07 - Python · CUDA · GPU Computing</div>
+  <h1 class="proj-title" data-i18n="flt.title">CSGO<br>FloatMaster</h1>
+  <p class="proj-oneliner" data-i18n="flt.one">GPU-accelerated CUDA tool for finding optimal CS:GO trade-up combinations with a predictable float result. A brute-force problem that takes hours on CPU completes in seconds on GPU.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Python</span><span class="chip filled">CUDA</span>
+      <span class="chip secondary">GPU Computing</span><span class="chip secondary">CS:GO</span>
+      <span class="chip surface">NumPy</span><span class="chip surface">Combinatorics</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/CSGOFloatMaster" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="flt.ov.b1">In CS:GO, a trade-up contract takes 10 skins and produces one from the next rarity tier. The output float is the weighted average of the 10 inputs, mapped through a per-skin formula.</p>
+        <p data-i18n="flt.ov.b2">Finding the exact combination that produces a desired float is a combinatorial search problem. This tool offloads it entirely to the GPU using CUDA, searching millions of combinations per second.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.problem">The Problem</div>
+      <h3 class="proj-section-title" data-i18n="flt.prob.title">Why GPU?</h3>
+      <div class="proj-section-body">
+        <p data-i18n="flt.prob.b1">Suppose you want a Factory New AWP | Dragon Lore below float 0.01. With 500 available input skins, that's ~2.6 trillion combinations - years at CPU speed, seconds to minutes on GPU.</p>
+      </div>
+      <div class="code-block">
+        <div class="code-bar">math</div>
+        <pre>C(500, 10) ≈ 2.6 × 10¹²  combinations
+
+<span class="cm"># CPU: ~years at single-thread speed</span>
+<span class="cm"># GPU (CUDA, 4090): seconds to minutes</span></pre>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.howit">How it works</div>
+      <h3 class="proj-section-title" data-i18n="flt.hw.title">Computation pipeline</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="flt.s1t">Define target</div><div class="step-desc" data-i18n="flt.s1d">Specify the desired output skin and target float range. Provide the pool of available inputs.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="flt.s2t">Upload to GPU</div><div class="step-desc" data-i18n="flt.s2d">Input float values transferred to GPU memory. CUDA kernel compiled and launched across all cores.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="flt.s3t">Parallel brute-force</div><div class="step-desc" data-i18n="flt.s3d">Each GPU thread evaluates a subset of combinations, computing the weighted average float.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="flt.s4t">Return results</div><div class="step-desc" data-i18n="flt.s4d">Matching combinations collected from GPU memory - ready to execute as real trade-up contracts.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title">Requirements &amp; setup</h3>
+      <div class="code-block"><div class="code-bar">bash</div>
+<pre><span class="cm"># Requires NVIDIA GPU with CUDA support</span>
+<span class="cm"># Install CUDA Toolkit from nvidia.com first</span>
+pip install -r requirements.txt
+python main.py</pre></div>
+    </div>
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Python</span><span class="chip filled">CUDA</span>
+        <span class="chip secondary">GPU parallelism</span><span class="chip secondary">CS:GO float formula</span>
+        <span class="chip surface">NumPy</span><span class="chip surface">Combinatorics</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.requirements">Requirements</div>
+      <div class="chips-row">
+        <span class="chip surface">NVIDIA GPU</span>
+        <span class="chip surface">CUDA Toolkit</span>
+        <span class="chip surface">Python 3.8+</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/CSGOFloatMaster" target="_blank"><span data-i18n="proj.viewgithub">GitHub Repository</span><span class="sidebar-link-arr">↗</span></a>
+        <a class="sidebar-link" href="pattern-searcher.html"><span>Pattern Searcher →</span><span class="sidebar-link-arr">→</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

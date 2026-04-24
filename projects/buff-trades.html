@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buff.market Auto Trades - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills" data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch/buff-market-auto-trades" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn"><button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button><button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button></div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+  <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow"><a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a></div>
+  <div class="proj-number"><span class="n">04</span> / 07 - Python · Automation · Cryptography</div>
+  <h1 class="proj-title" data-i18n="buf.title">Buff.market<br>Auto Trades</h1>
+  <p class="proj-oneliner" data-i18n="buf.one">Automatically delivers sold CS2 items on Buff.market. Handles Steam OpenID login, RSA-4096 encrypted session handoff, and Steam Guard confirmation - entirely hands-free.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Python</span><span class="chip filled">RSA-4096</span>
+      <span class="chip secondary">AES-128-CBC</span><span class="chip secondary">Steam OpenID</span>
+      <span class="chip surface">asyncio</span><span class="chip surface">aiosteampy</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/buff-market-auto-trades" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="buf.ov.b1">When you sell an item on Buff.market, the funds are held until you manually deliver it. This bot eliminates that step entirely. It logs in via Steam OpenID - no API key or manual cookie required.</p>
+        <p data-i18n="buf.ov.b2">The most technically interesting part: it replicates the hybrid RSA + AES-128-CBC encryption scheme reverse-engineered from the Buff Android APK.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.howit">How it works</div>
+      <h3 class="proj-section-title" data-i18n="buf.hw.title">Delivery flow per order</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="buf.s1t">Login</div><div class="step-desc" data-i18n="buf.s1d">Authenticates with Steam via aiosteampy, then runs the Steam OpenID flow against Buff's API.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="buf.s2t">Poll orders</div><div class="step-desc" data-i18n="buf.s2d">Fast poll every 15s. Full order list fetched from /api/market/sell_order/to_deliver.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="buf.s3t">Encrypt session</div><div class="step-desc" data-i18n="buf.s3d">Serializes Steam session cookies as JSON and encrypts with Buff's RSA-4096 public key using hybrid RSA + AES-128-CBC.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="buf.s4t">Send to Buff</div><div class="step-desc" data-i18n="buf.s4d">POSTs encrypted session to seller_send_offer. Buff decrypts and sends the trade to the buyer.</div></div></div>
+        <div class="step"><div class="step-num">05</div><div><div class="step-title" data-i18n="buf.s5t">Steam Guard confirm</div><div class="step-desc" data-i18n="buf.s5d">Confirms the trade offer using identity_secret from your .maFile.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title">Setup</h3>
+      <div class="code-block"><div class="code-bar">bash</div><pre>pip install -r requirements.txt
+cp config.example.json config.json
+python main.py</pre></div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.config">Configuration</div>
+      <h3 class="proj-section-title">Key config fields</h3>
+      <div class="config-table-wrap">
+        <table class="config-table">
+          <tr><th>Key</th><th>Required</th><th>Description</th></tr>
+          <tr><td>steam_id64</td><td>Yes</td><td>Your SteamID64</td></tr>
+          <tr><td>shared_secret</td><td>Yes</td><td>From .maFile - 2FA codes</td></tr>
+          <tr><td>identity_secret</td><td>Yes</td><td>From .maFile - trade confirmation</td></tr>
+          <tr><td>game</td><td>No</td><td>csgo / dota2 / tf2 / rust (default: csgo)</td></tr>
+          <tr><td>client_proxy</td><td>No</td><td>SOCKS5 proxy for Buff HTTP traffic</td></tr>
+          <tr><td>notif_interval_seconds</td><td>No</td><td>Poll interval (default: 15)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Python</span><span class="chip filled">RSA-4096</span>
+        <span class="chip secondary">AES-128-CBC</span><span class="chip secondary">asyncio</span>
+        <span class="chip surface">Steam OpenID</span><span class="chip surface">aiosteampy</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.games">Supported Games</div>
+      <div class="chips-row">
+        <span class="chip filled">CS2 / CS:GO</span>
+        <span class="chip surface">Dota 2</span><span class="chip surface">TF2</span><span class="chip surface">Rust</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/buff-market-auto-trades" target="_blank"><span data-i18n="proj.viewgithub">GitHub Repository</span><span class="sidebar-link-arr">↗</span></a>
+        <a class="sidebar-link" href="https://buff.market" target="_blank"><span>Buff.market</span><span class="sidebar-link-arr">↗</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

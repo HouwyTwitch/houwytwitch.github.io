@@ -1,943 +1,336 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Houwy — houwy.space</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-family='monospace' font-size='22' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3Ccircle cx='26' cy='8' r='4' fill='%23c8f135'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --border: #1e1e1e;
-  --accent: #c8f135;
-  --accent-dim: rgba(200,241,53,0.08);
-  --text: #e8e8e8;
-  --muted: #555;
-  --muted2: #2c2c2c;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg); color: var(--text);
-  font-family: 'DM Mono', monospace; font-size: 14px;
-  line-height: 1.7; overflow-x: hidden;
-}
-body::before {
-  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-}
-.grid-bg {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.28;
-  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
-
-/* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 60px; padding: 0 clamp(20px,5vw,64px);
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: rgba(10,10,10,0.88); backdrop-filter: blur(14px);
-}
-.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.5px; }
-.nav-logo .dot { color: var(--accent); }
-.nav-links { display: flex; gap: 28px; list-style: none; }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover { color: var(--accent); }
-.nav-ham { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-.nav-ham span { display: block; width: 22px; height: 1.5px; background: var(--muted); transition: all 0.3s; }
-.nav-ham.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.nav-ham.open span:nth-child(2) { opacity: 0; }
-.nav-ham.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-.nav-mobile {
-  display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
-  background: rgba(10,10,10,0.97); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border); flex-direction: column;
-  padding: 20px clamp(20px,5vw,40px);
-}
-.nav-mobile.open { display: flex; }
-.nav-mobile a { color: var(--muted); text-decoration: none; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
-.nav-mobile a:last-child { border-bottom: none; }
-.nav-mobile a:hover { color: var(--accent); }
-
-/* HERO */
-.hero {
-  position: relative; z-index: 1; min-height: 100vh;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
-  padding: 100px clamp(20px,5vw,64px) 60px; max-width: 1400px; margin: 0 auto;
-}
-.hero.centered { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-.hero.centered .hero-terminal { display: none; }
-.hero.centered .hero-ctas { justify-content: center; }
-.hero.centered .hero-meta { justify-content: center; }
-.hero.centered .hero-desc { margin-left: auto; margin-right: auto; }
-
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 10px;
-  border: 1px solid var(--border); color: var(--muted);
-  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 7px 16px; margin-bottom: 28px;
-  opacity: 0; animation: fadeUp 0.5s ease forwards 0.1s;
-}
-.hero-tag .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
-
-h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(72px,9.5vw,136px);
-  font-weight: 800; line-height: 0.87; letter-spacing: -4px;
-  margin-bottom: 28px;
-  opacity: 0; animation: fadeUp 0.6s ease forwards 0.25s;
-}
-h1 .accent { color: var(--accent); }
-
-.hero-desc {
-  max-width: 440px; color: var(--muted); font-size: 14px; line-height: 1.85;
-  margin-bottom: 36px;
-  opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s;
-}
-.hero-desc strong { color: var(--text); font-weight: 400; }
-
-.hero-ctas {
-  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px;
-  opacity: 0; animation: fadeUp 0.6s ease forwards 0.55s;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 22px; font-family: 'DM Mono', monospace;
-  font-size: 12px; letter-spacing: 0.05em; text-decoration: none;
-  transition: all 0.2s; cursor: pointer; border: none; white-space: nowrap;
-}
-.btn-primary { background: var(--accent); color: #0a0a0a; font-weight: 500; }
-.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-.hero-meta {
-  display: flex; gap: 36px;
-  opacity: 0; animation: fadeUp 0.6s ease forwards 0.7s;
-}
-.meta-num {
-  font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800;
-  color: var(--text); line-height: 1;
-}
-.meta-num span { color: var(--accent); }
-.meta-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
-
-/* TERMINAL */
-.hero-terminal { opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s; }
-.terminal-window { background: #0d0d0d; border: 1px solid var(--border); }
-.terminal-bar {
-  background: #141414; border-bottom: 1px solid var(--border);
-  padding: 10px 16px; display: flex; align-items: center; gap: 7px;
-}
-.t-dot { width: 10px; height: 10px; border-radius: 50%; }
-.t-dot.r { background: #ff5f56; } .t-dot.y { background: #ffbd2e; } .t-dot.g { background: #27c93f; }
-.t-title { font-size: 11px; color: var(--muted); margin-left: auto; letter-spacing: 0.04em; }
-.terminal-body { padding: 18px 20px; font-size: 12px; line-height: 2; min-height: 300px; font-family: 'DM Mono', monospace; overflow: hidden; }
-.tl { display: block; }
-.tl.cmd { color: #999; } .tl.cmd::before { content: '$ '; color: var(--accent); }
-.tl.ok { color: #6ee7b7; } .tl.ok::before { content: '> '; color: #333; }
-.tl.info { color: var(--text); } .tl.info::before { content: '> '; color: #333; }
-.tl.dim { color: #444; } .tl.dim::before { content: '  '; }
-.tl.hi { color: var(--accent); } .tl.hi::before { content: '> '; color: #333; }
-.tl.blank { height: 12px; display: block; }
-.tl.cursor::after { content: '▌'; color: var(--accent); animation: blink 1s step-end infinite; }
-
-/* SECTIONS */
-section {
-  position: relative; z-index: 1; width: 100%;
-  max-width: 1400px; margin: 0 auto;
-  padding: clamp(60px,8vw,100px) clamp(20px,5vw,64px);
-  border-top: 1px solid var(--border);
-}
-.section-label { font-size: 11px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; }
-.section-label::before { content: '// '; }
-h2 {
-  font-family: 'Syne', sans-serif; font-size: clamp(28px,4vw,52px);
-  font-weight: 800; letter-spacing: -1.5px; line-height: 1.05;
-  margin-bottom: clamp(32px,5vw,52px);
-}
-
-/* SKILLS */
-.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
-.skill-card { background: var(--bg); padding: clamp(24px,3vw,32px); transition: background 0.2s; }
-.skill-card:hover { background: var(--surface); }
-.skill-icon { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 16px; }
-.skill-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.skill-desc { color: var(--muted); font-size: 12px; line-height: 1.7; margin-bottom: 16px; }
-.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border: 1px solid var(--border); color: var(--muted); }
-.tag.hi { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-
-/* INFOSEC */
-.infosec-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
-.resume-block { background: var(--bg); padding: clamp(24px,3vw,32px); transition: background 0.2s; }
-.resume-block:hover { background: var(--surface); }
-.rbt {
-  font-size: 10px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
-  margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
-  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-  user-select: none; transition: color 0.2s;
-}
-.rbt:hover { color: var(--text); }
-.rbt-arrow { transition: transform 0.25s; font-size: 10px; }
-.rbt.open .rbt-arrow { transform: rotate(90deg); }
-.resume-items { display: flex; flex-direction: column; gap: 16px; }
-.rin { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
-.rid { font-size: 12px; color: var(--muted); line-height: 1.65; }
-.exp-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
-.exp-period { font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
-.tags-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
-
-/* PROJECTS */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px,100%),1fr)); gap: 1px; background: var(--border); }
-.project-card {
-  background: var(--bg); padding: clamp(24px,3vw,32px);
-  display: flex; flex-direction: column; text-decoration: none; color: inherit;
-  transition: background 0.2s; position: relative; overflow: hidden;
-}
-.project-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
-}
-.project-card:hover { background: var(--surface); }
-.project-card:hover::before { transform: scaleX(1); }
-.project-card:hover .pc-arrow { color: var(--accent); transform: translate(3px,-3px); }
-.pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-.pc-num { font-size: 11px; color: var(--muted2); }
-.pc-arrow { color: var(--muted2); font-size: 18px; transition: all 0.2s; }
-.pc-name { font-family: 'Syne', sans-serif; font-size: clamp(18px,2vw,22px); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
-.pc-desc { color: var(--muted); font-size: 12px; line-height: 1.7; flex: 1; margin-bottom: 18px; }
-.pc-langs { display: flex; gap: 8px; flex-wrap: wrap; }
-.pc-lang { font-size: 10px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
-.pc-lang::before { content: '#'; opacity: 0.4; }
-
-.projects-rows { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
-.project-row {
-  background: var(--bg); padding: clamp(18px,2.5vw,28px) clamp(20px,3vw,32px);
-  display: grid; grid-template-columns: 40px 1fr auto; gap: 16px; align-items: start;
-  text-decoration: none; color: inherit; transition: background 0.2s; position: relative;
-}
-.project-row::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-  background: var(--accent); transform: scaleY(0); transition: transform 0.3s;
-}
-.project-row:hover { background: var(--surface); }
-.project-row:hover::before { transform: scaleY(1); }
-.project-row:hover .pr-arrow { color: var(--accent); transform: translate(2px,-2px); }
-.pr-num { font-size: 11px; color: var(--muted2); padding-top: 3px; }
-.pr-name { font-family: 'Syne', sans-serif; font-size: clamp(15px,1.8vw,19px); font-weight: 700; margin-bottom: 5px; letter-spacing: -0.3px; }
-.pr-desc { color: var(--muted); font-size: 12px; line-height: 1.6; margin-bottom: 8px; }
-.pr-langs { display: flex; gap: 8px; flex-wrap: wrap; }
-.pr-lang { font-size: 10px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
-.pr-lang::before { content: '#'; opacity: 0.4; }
-.pr-arrow { color: var(--muted2); font-size: 18px; transition: all 0.2s; padding-top: 2px; }
-
-/* CONTACT */
-.contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,6vw,80px); align-items: start; }
-.avail-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(200,241,53,0.25); padding: 7px 14px; font-size: 11px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 28px; }
-.avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-.contact-sub { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 0; }
-.contact-links { border: 1px solid var(--border); }
-.contact-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--muted); font-size: 12px; transition: all 0.2s; gap: 14px; }
-.contact-link:last-child { border-bottom: none; }
-.contact-link:hover { background: var(--accent-dim); color: var(--accent); padding-left: 30px; }
-.contact-link span { flex: 1; }
-.contact-link-arrow { font-size: 11px; opacity: 0.4; }
-
-/* FOOTER */
-footer {
-  position: relative; z-index: 1; border-top: 1px solid var(--border);
-  padding: 28px clamp(20px,5vw,64px); display: flex; justify-content: space-between; align-items: center;
-}
-.footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; }
-.footer-logo span { color: var(--accent); }
-.footer-copy { font-size: 11px; color: var(--muted2); }
-
-/* REVEAL */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-
-/* TWEAKS */
-#tweaks-panel {
-  position: fixed; bottom: 24px; right: 24px; background: #111; border: 1px solid var(--border);
-  padding: 20px; width: 240px; z-index: 500; display: none; font-family: 'DM Mono', monospace;
-}
-#tweaks-panel h3 { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-.tweak-row { margin-bottom: 14px; }
-.tweak-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
-.tweak-options { display: flex; gap: 6px; flex-wrap: wrap; }
-.tweak-opt { padding: 4px 10px; border: 1px solid var(--border); font-size: 10px; color: var(--muted); cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; background: none; font-family: 'DM Mono', monospace; }
-.tweak-opt:hover { border-color: var(--accent); color: var(--accent); }
-.tweak-opt.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-.tweak-swatches { display: flex; gap: 8px; }
-.color-swatch { width: 22px; height: 22px; border: 2px solid transparent; cursor: pointer; transition: border-color 0.15s; }
-.color-swatch.active { border-color: var(--text); }
-
-/* CURSOR */
-.cursor-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.15s; }
-.cursor-dot.clicking { transform: scale(2); }
-.cursor-ring {
-  width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%;
-  position: fixed; pointer-events: none; z-index: 9998; opacity: 0.45;
-  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
-}
-.cursor-ring.hovered { width: 52px; height: 52px; opacity: 0.7; }
-.cursor-ring.clicking { width: 24px; height: 24px; opacity: 0.9; }
-
-/* GLOW ORB */
-.cursor-glow {
-  position: fixed; width: 600px; height: 600px;
-  border-radius: 50%; pointer-events: none; z-index: 0;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(200,241,53,0.035) 0%, transparent 65%);
-  transition: left 0.08s linear, top 0.08s linear;
-}
-
-/* CARD TILT */
-.project-card, .skill-card { transition: background 0.2s, transform 0.12s ease; will-change: transform; }
-.project-card { transform-style: preserve-3d; }
-.skill-card { transform-style: preserve-3d; }
-
-/* STAGGER skill reveal */
-.skills-grid .skill-card { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s; }
-.skills-grid.revealed .skill-card { opacity: 1; transform: none; }
-.skills-grid.revealed .skill-card:nth-child(1) { transition-delay: 0s; }
-.skills-grid.revealed .skill-card:nth-child(2) { transition-delay: 0.07s; }
-.skills-grid.revealed .skill-card:nth-child(3) { transition-delay: 0.14s; }
-.skills-grid.revealed .skill-card:nth-child(4) { transition-delay: 0.21s; }
-.skills-grid.revealed .skill-card:nth-child(5) { transition-delay: 0.28s; }
-.skills-grid.revealed .skill-card:nth-child(6) { transition-delay: 0.35s; }
-
-/* SCRAMBLE placeholder style */
-.scramble-active { color: var(--accent) !important; opacity: 0.7; }
-
-/* ACTIVE NAV */
-.nav-links a { position: relative; }
-.nav-links a.nav-active { color: var(--accent); }
-.nav-links a.nav-active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1px; background: var(--accent); }
-
-/* COUNTER */
-.meta-num { transition: color 0.3s; }
-
-/* SECTION ENTRY LINE */
-.section-label { overflow: hidden; }
-.section-label::after { content: ''; display: inline-block; width: 0; height: 1px; background: var(--accent); vertical-align: middle; margin-left: 8px; transition: width 0.6s ease 0.3s; }
-.section-label.visible::after { width: 40px; }
-
-/* ANIMATIONS */
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
-/* LANG TOGGLE */
-.lang-btn {
-  background: none; border: 1px solid var(--border); color: var(--muted);
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
-  padding: 5px 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
-}
-.lang-btn:hover { border-color: var(--accent); color: var(--accent); }
-.lang-btn .lang-active { color: var(--accent); }
-.lang-btn .lang-sep { opacity: 0.3; }
-
-/* RESPONSIVE */
-@media (max-width: 1000px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-terminal { display: none; }
-  .contact-inner { grid-template-columns: 1fr; gap: 36px; }
-}
-@media (max-width: 900px) {
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-ham { display: flex; }
-  .cursor-dot { display: none; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .project-row { grid-template-columns: 32px 1fr; }
-  .pr-arrow { display: none; }
-  footer { flex-direction: column; gap: 8px; text-align: center; }
-}
-</style>
+<title>Houwy - houwy.space</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/m3.css">
 </head>
 <body>
-<div class="grid-bg"></div>
-<div class="cursor-dot" id="cursor"></div>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-glow" id="cursorGlow"></div>
 
-<nav>
-  <div class="nav-logo">Houwy<span class="dot">.</span></div>
-  <ul class="nav-links">
-    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-    <li><a href="#infosec" data-i18n="nav.infosec">InfoSec</a></li>
+<!-- TOP APP BAR -->
+<header class="top-bar" id="topBar">
+  <a class="top-bar-logo" href="index.html">
+    <span class="logo-dot"></span>Houwy
+  </a>
+
+  <ul class="top-bar-nav">
+    <li><a href="#skills"   data-i18n="nav.skills">Skills</a></li>
+    <li><a href="#infosec"  data-i18n="nav.infosec">InfoSec</a></li>
     <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
-    <li><a href="https://github.com/HouwyTwitch" target="_blank" data-i18n="nav.github">GitHub ↗</a></li>
+    <li><a href="#contact"  data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <button class="lang-btn" id="langBtn" onclick="toggleLang()">
-      <span id="langEN" class="lang-active">EN</span><span class="lang-sep">/</span><span id="langRU">RU</span>
+
+  <div class="top-bar-actions">
+    <div class="seg-btn">
+      <button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button>
+      <button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <button class="ham-btn" id="hamBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
     </button>
-    <button class="nav-ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
-</nav>
-<div class="nav-mobile" id="navMob">
-  <a href="#skills" data-i18n="nav.skills">Skills</a>
-  <a href="#infosec" data-i18n="nav.infosec">InfoSec</a>
+</header>
+
+<nav class="nav-sheet" id="navSheet">
+  <a href="#skills"   data-i18n="nav.skills">Skills</a>
+  <a href="#infosec"  data-i18n="nav.infosec">InfoSec</a>
   <a href="#projects" data-i18n="nav.projects">Projects</a>
-  <a href="#contact" data-i18n="nav.contact">Contact</a>
-  <a href="https://github.com/HouwyTwitch" target="_blank" data-i18n="nav.github">GitHub ↗</a>
-</div>
+  <a href="#contact"  data-i18n="nav.contact">Contact</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+</nav>
 
 <!-- HERO -->
-<div class="hero" id="hero">
+<div class="hero-section">
   <div class="hero-left">
-    <div class="hero-tag"><span class="pulse"></span><span data-i18n="hero.tag">Python Dev &amp; InfoSec Specialist</span></div>
-    <h1>Houwy<span class="accent">.</span></h1>
-    <p class="hero-desc" data-i18n-html="hero.desc">
-      Building tools that work while you sleep.<br>
-      <strong>Trading automation</strong>, anti-bot bypass,<br>
-      and information security.
-    </p>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn btn-primary" data-i18n="hero.cta1">▸ View Projects</a>
-      <a href="https://github.com/HouwyTwitch" target="_blank" class="btn btn-ghost" data-i18n="hero.cta2">GitHub Profile ↗</a>
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span data-i18n="hero.eyebrow">Python Dev · InfoSec Specialist</span>
     </div>
-    <div class="hero-meta">
-      <div class="meta-item">
-        <div class="meta-num">20<span>+</span></div>
-        <div class="meta-label" data-i18n="meta.repos">Repositories</div>
+
+    <div class="hero-title display-lg">
+      <span class="line" data-i18n="hero.title1">Building</span>
+      <span class="line accent-word" data-i18n="hero.title2">tools</span>
+      <span class="line outline-word" data-i18n="hero.title3">that ship.</span>
+    </div>
+
+    <p class="hero-desc" data-i18n="hero.desc">
+      Trading automation, anti-bot bypass, and information security - tools that run 24/7 without manual input.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#projects" class="fab">
+        <span>▸</span>
+        <span data-i18n="hero.cta1">View Projects</span>
+      </a>
+      <a href="https://github.com/HouwyTwitch" target="_blank" class="btn btn-outlined" data-i18n="hero.cta2">GitHub ↗</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat1">20<span>+</span></div>
+        <div class="hero-stat-label" data-i18n="hero.stat1">Repositories</div>
       </div>
-      <div class="meta-item">
-        <div class="meta-num">3<span>×</span></div>
-        <div class="meta-label" data-i18n="meta.pull">Pull Shark</div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat2">3<span>×</span></div>
+        <div class="hero-stat-label" data-i18n="hero.stat2">Pull Shark</div>
       </div>
     </div>
   </div>
 
-  <div class="hero-terminal">
-    <div class="terminal-window">
-      <div class="terminal-bar">
-        <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
-        <span class="t-title">csfloat-bot — main.py</span>
+  <div class="hero-visual">
+    <div class="hero-chip c1">asyncio</div>
+    <div class="hero-chip c2">Steam API</div>
+    <div class="hero-chip c3">CUDA</div>
+
+    <div class="hero-card">
+      <div class="hero-card-bar">
+        <span class="hero-card-dot r"></span>
+        <span class="hero-card-dot y"></span>
+        <span class="hero-card-dot g"></span>
+        <span class="hero-card-title">csfloat-bot - main.py</span>
       </div>
-      <div class="terminal-body" id="termOut"></div>
+      <div class="hero-card-body mono" id="termOut"></div>
     </div>
   </div>
 </div>
 
 <!-- SKILLS -->
-<section id="skills">
-  <div class="section-label reveal" data-i18n="skills.label">Specialization</div>
-  <h2 class="reveal" data-i18n="skills.h2">Python &amp; Automation</h2>
-  <div class="skills-grid reveal">
-    <div class="skill-card">
-      <div class="skill-icon">⚡</div>
-      <div class="skill-title" data-i18n="skill.async">Async &amp; Concurrency</div>
-      <div class="skill-desc" data-i18n="skill.async.desc">High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.</div>
-      <div class="skill-tags"><span class="tag hi">asyncio</span><span class="tag hi">aiohttp</span><span class="tag hi">threading</span><span class="tag">multiprocessing</span></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon">🕷</div>
-      <div class="skill-title" data-i18n="skill.scraping">Scraping &amp; Browser Automation</div>
-      <div class="skill-desc" data-i18n="skill.scraping.desc">Data collection at any scale. Dynamic content, SPAs, auth flows and session management.</div>
-      <div class="skill-tags"><span class="tag hi">Playwright</span><span class="tag hi">Selenium</span><span class="tag hi">pydoll</span><span class="tag hi">undetected-chromedriver</span><span class="tag">BeautifulSoup</span></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon">🛡</div>
-      <div class="skill-title" data-i18n="skill.antibot">Anti-Bot Bypass</div>
-      <div class="skill-desc" data-i18n="skill.antibot.desc">Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.</div>
-      <div class="skill-tags"><span class="tag hi">primp</span><span class="tag hi">curl_cffi</span><span class="tag hi">JA3/JA4</span><span class="tag">Cloudflare</span></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon">🌐</div>
-      <div class="skill-title" data-i18n="skill.proxy">Proxy Infrastructure</div>
-      <div class="skill-desc" data-i18n="skill.proxy.desc">Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.</div>
-      <div class="skill-tags"><span class="tag hi">Proxy pools</span><span class="tag hi">SOCKS5</span><span class="tag hi">Rotation</span><span class="tag">Residential</span></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon">🤖</div>
-      <div class="skill-title" data-i18n="skill.api">API Integration &amp; Bots</div>
-      <div class="skill-desc" data-i18n="skill.api.desc">Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.</div>
-      <div class="skill-tags"><span class="tag hi">Steam API</span><span class="tag hi">CSFloat</span><span class="tag hi">Buff.market</span><span class="tag">CS.Money</span></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon">📱</div>
-      <div class="skill-title" data-i18n="skill.mobile">Mobile Development</div>
-      <div class="skill-desc" data-i18n="skill.mobile.desc">Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.</div>
-      <div class="skill-tags"><span class="tag hi">Kotlin</span><span class="tag hi">Jetpack Compose</span><span class="tag hi">Android</span><span class="tag">Cryptography</span></div>
+<section id="skills" class="full-width-section">
+  <div class="section">
+    <div class="section-eyebrow reveal" data-i18n="skills.eyebrow">Specialization</div>
+    <h2 class="section-title headline-lg reveal" data-i18n="skills.title">Python &amp; Automation</h2>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-title" data-i18n="skill1.title">Async &amp; Concurrency</div>
+        <p class="skill-desc" data-i18n="skill1.desc">High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.</p>
+        <div class="chips-row">
+          <span class="chip filled">asyncio</span>
+          <span class="chip filled">aiohttp</span>
+          <span class="chip filled">threading</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🕷</div>
+        <div class="skill-title" data-i18n="skill2.title">Scraping &amp; Browser Automation</div>
+        <p class="skill-desc" data-i18n="skill2.desc">Data collection at any scale. Dynamic content, SPAs, auth flows and session management.</p>
+        <div class="chips-row">
+          <span class="chip secondary">Playwright</span>
+          <span class="chip secondary">Selenium</span>
+          <span class="chip secondary">pydoll</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🛡</div>
+        <div class="skill-title" data-i18n="skill3.title">Anti-Bot Bypass</div>
+        <p class="skill-desc" data-i18n="skill3.desc">Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion.</p>
+        <div class="chips-row">
+          <span class="chip surface">primp</span>
+          <span class="chip surface">curl_cffi</span>
+          <span class="chip surface">JA3/JA4</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-title" data-i18n="skill4.title">Proxy Infrastructure</div>
+        <p class="skill-desc" data-i18n="skill4.desc">Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.</p>
+        <div class="chips-row">
+          <span class="chip filled">SOCKS5</span>
+          <span class="chip filled">Rotation</span>
+          <span class="chip filled">Pools</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-title" data-i18n="skill5.title">API Integration &amp; Bots</div>
+        <p class="skill-desc" data-i18n="skill5.desc">Steam, CS2 marketplaces, exchange APIs. Full trading automation - no browser required.</p>
+        <div class="chips-row">
+          <span class="chip secondary">Steam API</span>
+          <span class="chip secondary">CSFloat</span>
+          <span class="chip secondary">Buff.market</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📱</div>
+        <div class="skill-title" data-i18n="skill6.title">Mobile Development</div>
+        <p class="skill-desc" data-i18n="skill6.desc">Native Android in Kotlin. Modern SDA - a full Steam Guard reimplementation from scratch.</p>
+        <div class="chips-row">
+          <span class="chip surface">Kotlin</span>
+          <span class="chip surface">Jetpack Compose</span>
+          <span class="chip surface">Android</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- INFOSEC -->
 <section id="infosec">
-  <div class="section-label reveal" data-i18n="infosec.label">Resume</div>
-  <h2 class="reveal" data-i18n="infosec.h2">InfoSec</h2>
-  <div class="infosec-grid reveal">
-    <div class="resume-block">
-      <div class="rbt" id="legisToggle"><span data-i18n="infosec.legis">Legislation &amp; Regulatory Framework</span><span class="rbt-arrow">▸</span></div>
-      <div id="legisContent" style="display:none">
-        <div class="resume-items">
-          <div class="resume-item"><div class="rin">ФЗ № 149-ФЗ / 152-ФЗ / 187-ФЗ</div><div class="rid">Information protection, personal data processing, critical information infrastructure security</div></div>
-          <div class="resume-item"><div class="rin">ФСТЭК Orders 17 / 21 / 239 / 31</div><div class="rid">GIS protection requirements, PD security measures, significant KII objects, industrial ACS</div></div>
-          <div class="resume-item"><div class="rin">ФЗ № 63-ФЗ / 98-ФЗ</div><div class="rid">Electronic signatures and commercial secrets legislation</div></div>
-          <div class="resume-item"><div class="rin">Постановления Правительства № 1119 / 127</div><div class="rid">PD protection levels (УЗ 1–4), KII categorization criteria</div></div>
-          <div class="resume-item"><div class="rin">ФСБ Orders № 378 / 66 / 796</div><div class="rid">SKZI requirements, electronic signature means and certification centers</div></div>
-          <div class="resume-item"><div class="rin">ГОСТ Р 57580.1 / .2</div><div class="rid">Financial organization security — baseline controls and CBR conformity assessment</div></div>
-          <div class="resume-item"><div class="rin">ISO/IEC 27001 / 27002</div><div class="rid">International ISMS standards — information security management systems</div></div>
-          <div class="resume-item"><div class="rin">ГОСТ 34 series</div><div class="rid">Automated systems lifecycle: requirements, technical specification, testing stages</div></div>
+  <div class="section">
+    <div class="section-eyebrow reveal" data-i18n="infosec.eyebrow">Resume</div>
+    <h2 class="section-title headline-lg reveal" data-i18n="infosec.title">InfoSec</h2>
+
+    <div class="infosec-cards reveal">
+      <!-- Legislation -->
+      <div class="infosec-card">
+        <div class="infosec-card-header">
+          <span class="infosec-card-label" data-i18n="infosec.legis">Legislation &amp; Regulatory Framework</span>
+          <span class="infosec-chevron">⌄</span>
         </div>
-      </div>
-    </div>
-    <div class="resume-block">
-      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;"><span data-i18n="infosec.exp">Work Experience</span></div>
-      <div class="resume-items">
-        <div class="resume-item">
-          <div class="exp-header">
-            <div class="rin" data-i18n="infosec.role">Information Security Specialist</div>
-            <div class="exp-period">Commercial</div>
+        <div class="infosec-card-body">
+          <div class="infosec-items">
+            <div><div class="infosec-item-name">ФЗ № 149-ФЗ / 152-ФЗ / 187-ФЗ</div><div class="infosec-item-desc" data-i18n="legis.1">Information protection, personal data processing, critical information infrastructure security</div></div>
+            <div><div class="infosec-item-name">ФСТЭК Orders 17 / 21 / 239 / 31</div><div class="infosec-item-desc" data-i18n="legis.2">GIS protection requirements, PD security measures, significant KII objects, industrial ACS</div></div>
+            <div><div class="infosec-item-name">ФЗ № 63-ФЗ / 98-ФЗ</div><div class="infosec-item-desc" data-i18n="legis.3">Electronic signatures and commercial secrets legislation</div></div>
+            <div><div class="infosec-item-name">ПП № 1119 / 127</div><div class="infosec-item-desc" data-i18n="legis.4">PD protection levels (УЗ 1–4), KII categorization criteria</div></div>
+            <div><div class="infosec-item-name">ФСБ № 378 / 66 / 796</div><div class="infosec-item-desc" data-i18n="legis.5">SKZI requirements, electronic signature means and certification centers</div></div>
+            <div><div class="infosec-item-name">ГОСТ Р 57580.1 / .2</div><div class="infosec-item-desc" data-i18n="legis.6">Financial organization security - baseline controls and CBR conformity assessment</div></div>
+            <div><div class="infosec-item-name">ISO/IEC 27001 / 27002</div><div class="infosec-item-desc" data-i18n="legis.7">International ISMS standards</div></div>
+            <div><div class="infosec-item-name">ГОСТ 34 series</div><div class="infosec-item-desc" data-i18n="legis.8">Automated systems lifecycle: requirements, technical specification, testing stages</div></div>
           </div>
-          <div class="rid" data-i18n="infosec.role.desc">IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.</div>
         </div>
       </div>
-    </div>
-    <div class="resume-block">
-      <div class="rbt" style="cursor:default; border-bottom: 1px solid var(--border); margin-bottom:20px;"><span data-i18n="infosec.tools">Tools &amp; Security Products</span></div>
-      <div class="tags-cloud">
-        <span class="tag hi">Astra Linux</span><span class="tag hi">КриптоПро 4/5</span><span class="tag hi">ViPNet</span>
-        <span class="tag hi">Континент TLS</span><span class="tag hi">Dr.Web</span>
-        <span class="tag hi">Kaspersky Endpoint</span><span class="tag hi">Dallas Lock</span><span class="tag hi">Secret Net Studio</span>
+
+      <!-- Experience -->
+      <div class="infosec-card open">
+        <div class="infosec-card-header">
+          <span class="infosec-card-label" data-i18n="infosec.exp">Work Experience</span>
+          <span class="infosec-chevron">⌄</span>
+        </div>
+        <div class="infosec-card-body">
+          <div class="infosec-items">
+            <div>
+              <div class="exp-header">
+                <div class="infosec-item-name" data-i18n="infosec.role">Information Security Specialist</div>
+                <span class="exp-period">Commercial</span>
+              </div>
+              <div class="infosec-item-desc" data-i18n="infosec.roledesc">IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="infosec-card open">
+        <div class="infosec-card-header">
+          <span class="infosec-card-label" data-i18n="infosec.tools">Tools &amp; Security Products</span>
+          <span class="infosec-chevron">⌄</span>
+        </div>
+        <div class="infosec-card-body">
+          <div class="chips-row" style="padding-top:16px;border-top:1px solid var(--md-outline-variant)">
+            <span class="chip filled">Astra Linux</span>
+            <span class="chip filled">КриптоПро 4/5</span>
+            <span class="chip filled">ViPNet</span>
+            <span class="chip filled">Континент TLS</span>
+            <span class="chip secondary">Dr.Web</span>
+            <span class="chip secondary">Kaspersky Endpoint</span>
+            <span class="chip secondary">Dallas Lock</span>
+            <span class="chip secondary">Secret Net Studio</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label reveal" data-i18n="projects.label">Work</div>
-  <h2 class="reveal" data-i18n="projects.h2">Selected Projects</h2>
+<section id="projects" class="full-width-section">
+  <div class="section">
+    <div class="section-eyebrow reveal" data-i18n="projects.eyebrow">Work</div>
+    <h2 class="section-title headline-lg reveal" data-i18n="projects.title">Selected Projects</h2>
 
-  <div class="projects-grid reveal" id="projGrid">
-    <a class="project-card" href="projects/modern-sda.html">
-      <div class="pc-header"><span class="pc-num">01</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">Modern SDA</div>
-      <p class="pc-desc">A modern PyQt5 Steam Desktop Authenticator — multi-account, live TOTP codes, all confirmation types, proxy support.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">PyQt5</span><span class="pc-lang">Steam API</span></div>
-    </a>
-    <a class="project-card" href="projects/csfloat-bot.html">
-      <div class="pc-header"><span class="pc-num">02</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">CSFloat Auto Bot</div>
-      <p class="pc-desc">Async Python bot automating the full CS2 seller flow on CSFloat — sale detection to Steam Guard confirm, no browser needed.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">asyncio</span><span class="pc-lang">CSFloat API</span></div>
-    </a>
-    <a class="project-card" href="projects/modern-sda-android.html">
-      <div class="pc-header"><span class="pc-num">03</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">Modern SDA Android</div>
-      <p class="pc-desc">Native Android Steam authenticator built with Jetpack Compose. Multi-account, TOTP, trade confirmations — all from your phone.</p>
-      <div class="pc-langs"><span class="pc-lang">Kotlin</span><span class="pc-lang">Jetpack Compose</span><span class="pc-lang">Steam Guard</span></div>
-    </a>
-    <a class="project-card" href="projects/buff-trades.html">
-      <div class="pc-header"><span class="pc-num">04</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">Buff.market Auto Trades</div>
-      <p class="pc-desc">Automates item delivery on Buff.market — Steam auth, RSA-4096 encrypted session handoff, Guard confirmation, hands-free.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">Buff API</span><span class="pc-lang">Cryptography</span></div>
-    </a>
-    <a class="project-card" href="projects/csmoney-trade.html">
-      <div class="pc-header"><span class="pc-num">05</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">CS.Money Auto Trade</div>
-      <p class="pc-desc">Replicates the CS.Money Chrome extension — polls notifications, fires trade offers and confirms them via Steam Guard automatically.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">CS.Money API</span><span class="pc-lang">asyncio</span></div>
-    </a>
-    <a class="project-card" href="projects/pattern-searcher.html">
-      <div class="pc-header"><span class="pc-num">06</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">Pattern Searcher Bot</div>
-      <p class="pc-desc">Real-time bot hunting CS:GO skins with specific patterns at the best prices. Continuous market monitoring and auto-buy.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">CS:GO API</span><span class="pc-lang">Pattern Analysis</span></div>
-    </a>
-    <a class="project-card" href="projects/float-master.html">
-      <div class="pc-header"><span class="pc-num">07</span><span class="pc-arrow">↗</span></div>
-      <div class="pc-name">CSGOFloatMaster</div>
-      <p class="pc-desc">GPU-accelerated CUDA tool that finds optimal CS:GO trade-up combinations with a predictable float — impossible at CPU speed.</p>
-      <div class="pc-langs"><span class="pc-lang">Python</span><span class="pc-lang">CUDA</span><span class="pc-lang">GPU Computing</span></div>
-    </a>
-  </div>
-
-  <div class="projects-rows" id="projRows" style="display:none">
-    <a class="project-row" href="projects/modern-sda.html"><div class="pr-num">01</div><div><div class="pr-name">Modern SDA</div><p class="pr-desc">Modern PyQt5 Steam Desktop Authenticator with multi-account management.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">PyQt5</span><span class="pr-lang">Steam API</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/csfloat-bot.html"><div class="pr-num">02</div><div><div class="pr-name">CSFloat Auto Bot</div><p class="pr-desc">Full CS2 seller automation on CSFloat without a browser extension.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">asyncio</span><span class="pr-lang">CSFloat API</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/modern-sda-android.html"><div class="pr-num">03</div><div><div class="pr-name">Modern SDA Android</div><p class="pr-desc">Native Kotlin Steam authenticator with Jetpack Compose UI.</p><div class="pr-langs"><span class="pr-lang">Kotlin</span><span class="pr-lang">Android</span><span class="pr-lang">Steam Guard</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/buff-trades.html"><div class="pr-num">04</div><div><div class="pr-name">Buff.market Auto Trades</div><p class="pr-desc">Automated item delivery with RSA-encrypted session handoff.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">Buff API</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/csmoney-trade.html"><div class="pr-num">05</div><div><div class="pr-name">CS.Money Auto Trade</div><p class="pr-desc">Automated offer creation and Steam Guard confirmation on CS.Money.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">CS.Money API</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/pattern-searcher.html"><div class="pr-num">06</div><div><div class="pr-name">Pattern Searcher Bot</div><p class="pr-desc">Real-time CS:GO skin pattern hunting bot with auto-buy.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">CS:GO API</span></div></div><div class="pr-arrow">↗</div></a>
-    <a class="project-row" href="projects/float-master.html"><div class="pr-num">07</div><div><div class="pr-name">CSGOFloatMaster</div><p class="pr-desc">GPU-accelerated CUDA tool for predictable CS:GO trade-up floats.</p><div class="pr-langs"><span class="pr-lang">Python</span><span class="pr-lang">CUDA</span></div></div><div class="pr-arrow">↗</div></a>
+    <div class="projects-grid">
+      <a class="project-card reveal reveal-delay-1" href="projects/modern-sda.html">
+        <div class="pc-header"><span class="pc-num mono">01</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj1.name">Modern SDA</div>
+        <p class="pc-desc" data-i18n="proj1.desc">A modern PyQt5 Steam Desktop Authenticator - multi-account, live TOTP codes, all confirmation types, proxy support.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">PyQt5</span><span class="chip surface">Steam API</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-2" href="projects/csfloat-bot.html">
+        <div class="pc-header"><span class="pc-num mono">02</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj2.name">CSFloat Auto Bot</div>
+        <p class="pc-desc" data-i18n="proj2.desc">Async Python bot automating the full CS2 seller flow on CSFloat - sale detection to Steam Guard confirm, no browser needed.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">asyncio</span><span class="chip surface">CSFloat API</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-3" href="projects/modern-sda-android.html">
+        <div class="pc-header"><span class="pc-num mono">03</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj3.name">Modern SDA Android</div>
+        <p class="pc-desc" data-i18n="proj3.desc">Native Android Steam authenticator built with Jetpack Compose. Multi-account, TOTP, trade confirmations.</p>
+        <div class="chips-row"><span class="chip surface">Kotlin</span><span class="chip surface">Jetpack Compose</span><span class="chip surface">Steam Guard</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-1" href="projects/buff-trades.html">
+        <div class="pc-header"><span class="pc-num mono">04</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj4.name">Buff.market Auto Trades</div>
+        <p class="pc-desc" data-i18n="proj4.desc">Automates item delivery on Buff.market - Steam auth, RSA-4096 encrypted session handoff, Guard confirmation.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">RSA-4096</span><span class="chip surface">Buff API</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-2" href="projects/csmoney-trade.html">
+        <div class="pc-header"><span class="pc-num mono">05</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj5.name">CS.Money Auto Trade</div>
+        <p class="pc-desc" data-i18n="proj5.desc">Replicates the CS.Money Chrome extension - polls notifications, fires trade offers and confirms them via Steam Guard.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">CS.Money API</span><span class="chip surface">asyncio</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-3" href="projects/pattern-searcher.html">
+        <div class="pc-header"><span class="pc-num mono">06</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj6.name">Pattern Searcher Bot</div>
+        <p class="pc-desc" data-i18n="proj6.desc">Real-time bot hunting CS:GO skins with specific patterns at the best prices. Continuous market monitoring.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">CS:GO API</span><span class="chip surface">Pattern Analysis</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-1" href="projects/float-master.html">
+        <div class="pc-header"><span class="pc-num mono">07</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj7.name">CSGOFloatMaster</div>
+        <p class="pc-desc" data-i18n="proj7.desc">GPU-accelerated CUDA tool that finds optimal CS:GO trade-up combinations with a predictable float result.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">CUDA</span><span class="chip surface">GPU Computing</span></div>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="contact-inner">
-    <div>
-      <div class="section-label reveal" data-i18n="contact.label">Get in touch</div>
-      <h2 class="reveal" data-i18n-html="contact.h2">Let's work<br> together</h2>
-      <div class="avail-badge reveal"><div class="avail-dot"></div><span data-i18n="contact.badge">Available for projects</span></div>
-      <p class="contact-sub reveal" data-i18n="contact.sub">Have a task in automation, security, or Python development? Reach out — let's figure it out.</p>
-    </div>
-    <div class="reveal">
-      <div class="contact-links">
-        <a href="https://github.com/HouwyTwitch" target="_blank" class="contact-link"><span>github.com/HouwyTwitch</span><span class="contact-link-arrow">↗</span></a>
-        <a href="https://t.me/houwy" target="_blank" class="contact-link"><span>@houwy on Telegram</span><span class="contact-link-arrow">↗</span></a>
+  <div class="section">
+    <div class="contact-layout">
+      <div>
+        <div class="section-eyebrow reveal" data-i18n="contact.eyebrow">Get in touch</div>
+        <h2 class="section-title headline-lg reveal" data-i18n="contact.title">Let's work<br>together</h2>
+        <div class="avail-chip reveal">
+          <span class="dot"></span>
+          <span data-i18n="contact.badge">Available for projects</span>
+        </div>
+        <p class="body-md reveal" style="color:var(--md-on-surface-variant);max-width:400px" data-i18n="contact.desc">
+          Have a task in automation, security, or Python development? Reach out - let's figure it out.
+        </p>
+      </div>
+      <div class="reveal" style="align-self:center">
+        <div class="contact-links-card">
+          <a href="https://github.com/HouwyTwitch" target="_blank" class="contact-link">
+            <span>github.com/HouwyTwitch</span>
+            <span class="contact-link-arr">↗</span>
+          </a>
+          <a href="https://t.me/houwy" target="_blank" class="contact-link">
+            <span>@houwy - Telegram</span>
+            <span class="contact-link-arr">↗</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-logo">Houwy<span>.</span></div>
-  <div class="footer-copy">houwy.space — © 2026</div>
+<footer class="site-footer">
+  <a class="footer-logo" href="index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
 </footer>
 
-<!-- TWEAKS -->
-<div id="tweaks-panel">
-      <h3 data-i18n="tweaks.title">Tweaks</h3>
-  <div class="tweak-row">
-    <div class="tweak-label" data-i18n="tweaks.accent">Accent Color</div>
-    <div class="tweak-swatches">
-      <div class="color-swatch active" data-color="#c8f135" style="background:#c8f135" title="Lime"></div>
-      <div class="color-swatch" data-color="#2dd4bf" style="background:#2dd4bf" title="Teal"></div>
-      <div class="color-swatch" data-color="#fb923c" style="background:#fb923c" title="Orange"></div>
-      <div class="color-swatch" data-color="#a78bfa" style="background:#a78bfa" title="Violet"></div>
-    </div>
-  </div>
-  <div class="tweak-row">
-    <div class="tweak-label" data-i18n="tweaks.projectsLayout">Projects Layout</div>
-    <div class="tweak-options">
-      <button class="tweak-opt active" data-layout="grid" data-i18n="tweaks.grid">Grid</button>
-      <button class="tweak-opt" data-layout="rows" data-i18n="tweaks.rows">Rows</button>
-    </div>
-  </div>
-  <div class="tweak-row">
-    <div class="tweak-label" data-i18n="tweaks.heroLayout">Hero Layout</div>
-    <div class="tweak-options">
-      <button class="tweak-opt active" data-hero="split" data-i18n="tweaks.split">Split</button>
-      <button class="tweak-opt" data-hero="centered" data-i18n="tweaks.centered">Centered</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accentColor": "#c8f135",
-  "projectLayout": "rows",
-  "heroLayout": "split"
-}/*EDITMODE-END*/;
-
-// --- Tweaks ---
-function hexToRgb(h){ return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)).join(','); }
-function applyAccent(c){
-  document.documentElement.style.setProperty('--accent',c);
-  document.documentElement.style.setProperty('--accent-dim',`rgba(${hexToRgb(c)},0.08)`);
-}
-function applyLayout(m){
-  document.getElementById('projGrid').style.display = m==='grid'?'grid':'none';
-  document.getElementById('projRows').style.display = m==='rows'?'flex':'none';
-}
-function applyHero(m){
-  const hero=document.getElementById('hero');
-  hero.classList.toggle('centered', m==='centered');
-}
-
-applyAccent(TWEAK_DEFAULTS.accentColor);
-applyLayout(TWEAK_DEFAULTS.projectLayout);
-applyHero(TWEAK_DEFAULTS.heroLayout);
-
-document.querySelectorAll('.color-swatch').forEach(s=>{
-  s.classList.toggle('active', s.dataset.color===TWEAK_DEFAULTS.accentColor);
-  s.addEventListener('click',()=>{
-    applyAccent(s.dataset.color);
-    document.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('active'));
-    s.classList.add('active');
-    window.parent.postMessage({type:'__edit_mode_set_keys',edits:{accentColor:s.dataset.color}},'*');
-  });
-});
-document.querySelectorAll('[data-layout]').forEach(b=>{
-  b.classList.toggle('active', b.dataset.layout===TWEAK_DEFAULTS.projectLayout);
-  b.addEventListener('click',()=>{
-    applyLayout(b.dataset.layout);
-    document.querySelectorAll('[data-layout]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    window.parent.postMessage({type:'__edit_mode_set_keys',edits:{projectLayout:b.dataset.layout}},'*');
-  });
-});
-document.querySelectorAll('[data-hero]').forEach(b=>{
-  b.classList.toggle('active', b.dataset.hero===TWEAK_DEFAULTS.heroLayout);
-  b.addEventListener('click',()=>{
-    applyHero(b.dataset.hero);
-    document.querySelectorAll('[data-hero]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    window.parent.postMessage({type:'__edit_mode_set_keys',edits:{heroLayout:b.dataset.hero}},'*');
-  });
-});
-
-window.addEventListener('message',e=>{
-  if(e.data?.type==='__activate_edit_mode') document.getElementById('tweaks-panel').style.display='block';
-  if(e.data?.type==='__deactivate_edit_mode') document.getElementById('tweaks-panel').style.display='none';
-});
-window.parent.postMessage({type:'__edit_mode_available'},'*');
-
-// --- i18n ---
-const translations = {
-  en: {
-    'nav.skills': 'Skills', 'nav.infosec': 'InfoSec', 'nav.projects': 'Projects', 'nav.contact': 'Contact', 'nav.github': 'GitHub ↗',
-    'hero.tag': 'Python Dev & InfoSec Specialist',
-    'hero.desc': 'Building tools that work while you sleep.<br><strong>Trading automation</strong>, anti-bot bypass,<br>and information security.',
-    'hero.cta1': '▸ View Projects', 'hero.cta2': 'GitHub Profile ↗',
-    'meta.repos': 'Repositories', 'meta.pull': 'Pull Shark',
-    'skills.label': 'Specialization', 'skills.h2': 'Python & Automation',
-    'skill.async': 'Async & Concurrency', 'skill.scraping': 'Scraping & Browser Automation',
-    'skill.antibot': 'Anti-Bot Bypass', 'skill.proxy': 'Proxy Infrastructure',
-    'skill.api': 'API Integration & Bots', 'skill.mobile': 'Mobile Development',
-    'skill.async.desc': 'High-throughput async solutions. Trading bots, parallel tasks, efficient resource utilization.',
-    'skill.scraping.desc': 'Data collection at any scale. Dynamic content, SPAs, auth flows and session management.',
-    'skill.antibot.desc': 'Deep knowledge of TLS fingerprinting, behavioral analysis, canvas/WebGL evasion. Undetected at scale.',
-    'skill.proxy.desc': 'Pool management, rotation, load balancing. HTTP/SOCKS5, residential and datacenter proxies.',
-    'skill.api.desc': 'Steam, CS2 marketplaces, exchange APIs. Full trading automation — no browser required.',
-    'skill.mobile.desc': 'Native Android in Kotlin. Modern SDA — a full Steam Guard reimplementation from scratch.',
-    'infosec.label': 'Resume', 'infosec.h2': 'InfoSec',
-    'infosec.legis': 'Legislation & Regulatory Framework',
-    'infosec.exp': 'Work Experience', 'infosec.tools': 'Tools & Security Products',
-    'infosec.role': 'Information Security Specialist',
-    'infosec.role.desc': 'IS policy development, system audits, PD information systems, regulatory compliance. Interaction with FSTEC, technical documentation preparation.',
-    'projects.label': 'Work', 'projects.h2': 'Selected Projects',
-    'contact.label': 'Get in touch', 'contact.h2': "Let's work<br> together",
-    'contact.badge': 'Available for projects',
-    'contact.sub': "Have a task in automation, security, or Python development? Reach out — let's figure it out.",
-    'tweaks.title': 'Tweaks', 'tweaks.accent': 'Accent Color', 'tweaks.projectsLayout': 'Projects Layout',
-    'tweaks.grid': 'Grid', 'tweaks.rows': 'Rows', 'tweaks.heroLayout': 'Hero Layout',
-    'tweaks.split': 'Split', 'tweaks.centered': 'Centered',
-  },
-  ru: {
-    'nav.skills': 'Навыки', 'nav.infosec': 'ИнфоБез', 'nav.projects': 'Проекты', 'nav.contact': 'Контакты', 'nav.github': 'GitHub ↗',
-    'hero.tag': 'Python-разработчик и специалист по ИБ',
-    'hero.desc': 'Создаю инструменты, которые работают пока вы спите.<br><strong>Торговая автоматизация</strong>, обход антибот-систем<br>и информационная безопасность.',
-    'hero.cta1': '▸ Смотреть проекты', 'hero.cta2': 'GitHub профиль ↗',
-    'meta.repos': 'Репозиториев', 'meta.pull': 'Pull Shark',
-    'skills.label': 'Специализация', 'skills.h2': 'Python и автоматизация',
-    'skill.async': 'Асинхронность и параллелизм', 'skill.scraping': 'Парсинг и браузерная автоматизация',
-    'skill.antibot': 'Обход антибот-систем', 'skill.proxy': 'Прокси-инфраструктура',
-    'skill.api': 'API-интеграции и боты', 'skill.mobile': 'Мобильная разработка',
-    'skill.async.desc': 'Высоконагруженные асинхронные решения: торговые боты, параллельные задачи и эффективное использование ресурсов.',
-    'skill.scraping.desc': 'Сбор данных любого масштаба: динамический контент, SPA, авторизация и управление сессиями.',
-    'skill.antibot.desc': 'Глубокая экспертиза в TLS-отпечатках, поведенческом анализе и обходе canvas/WebGL-проверок. Незаметно в масштабе.',
-    'skill.proxy.desc': 'Управление пулами прокси, ротация и балансировка нагрузки. HTTP/SOCKS5, резидентские и дата-центровые прокси.',
-    'skill.api.desc': 'Интеграции со Steam, CS2 маркетплейсами и exchange API. Полная торговая автоматизация без браузера.',
-    'skill.mobile.desc': 'Нативная Android-разработка на Kotlin. Modern SDA — полная реализация Steam Guard с нуля.',
-    'infosec.label': 'Резюме', 'infosec.h2': 'InfoSec',
-    'infosec.legis': 'Законодательство и нормативная база',
-    'infosec.exp': 'Опыт работы', 'infosec.tools': 'Инструменты и СЗИ',
-    'infosec.role': 'Специалист по защите информации',
-    'infosec.role.desc': 'Разработка политик ИБ, аудит систем, сопровождение ИСПДн и соответствие требованиям регуляторов. Взаимодействие с ФСТЭК и подготовка технической документации.',
-    'projects.label': 'Работы', 'projects.h2': 'Избранные проекты',
-    'contact.label': 'Связаться', 'contact.h2': 'Давайте<br> работать<br> вместе',
-    'contact.badge': 'Открыт для предложений',
-    'contact.sub': 'Есть задача по автоматизации, безопасности или Python-разработке? Пишите — разберёмся.',
-    'tweaks.title': 'Настройки', 'tweaks.accent': 'Акцентный цвет', 'tweaks.projectsLayout': 'Макет проектов',
-    'tweaks.grid': 'Сетка', 'tweaks.rows': 'Список', 'tweaks.heroLayout': 'Макет главного блока',
-    'tweaks.split': 'Сплит', 'tweaks.centered': 'По центру',
-  }
-};
-let currentLang = localStorage.getItem('lang') || 'en';
-function applyLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('lang', lang);
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach(el => {
-    const key = el.dataset.i18nHtml;
-    if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
-  });
-  document.getElementById('langEN').className = lang==='en' ? 'lang-active' : '';
-  document.getElementById('langRU').className = lang==='ru' ? 'lang-active' : '';
-  document.documentElement.lang = lang;
-}
-function toggleLang() { applyLang(currentLang === 'en' ? 'ru' : 'en'); }
-applyLang(currentLang);
-
-// --- Nav hamburger ---
-const ham=document.getElementById('ham'), mob=document.getElementById('navMob');
-ham.addEventListener('click',()=>{ ham.classList.toggle('open'); mob.classList.toggle('open'); });
-mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ ham.classList.remove('open'); mob.classList.remove('open'); }));
-
-// --- Cursor (dot + lagging ring + glow) ---
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-const glow = document.getElementById('cursorGlow');
-let mx = 0, my = 0, rx = 0, ry = 0, rafCursor;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cur.style.left = mx - 2.5 + 'px';
-  cur.style.top = my - 2.5 + 'px';
-  glow.style.left = mx + 'px';
-  glow.style.top = my + 'px';
-});
-document.addEventListener('mousedown', () => { cur.classList.add('clicking'); ring.classList.add('clicking'); });
-document.addEventListener('mouseup', () => { cur.classList.remove('clicking'); ring.classList.remove('clicking'); });
-(function lerpRing() {
-  rx += (mx - rx) * 0.10;
-  ry += (my - ry) * 0.10;
-  ring.style.left = rx - 16 + 'px';
-  ring.style.top = ry - 16 + 'px';
-  requestAnimationFrame(lerpRing);
-})();
-const hoverEls = document.querySelectorAll('a, button, .project-card, .project-row, .skill-card, .resume-block');
-hoverEls.forEach(el => {
-  el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-  el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-});
-
-// --- Text scramble on h2 ---
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#$@&%';
-function scramble(el) {
-  const origHTML = el.innerHTML;
-  const origText = (el.innerText || el.textContent).trim();
-  el.classList.add('scramble-active');
-  const dur = 750, startT = performance.now();
-  function frame(ts) {
-    const p = Math.min((ts - startT) / dur, 1);
-    const resolved = Math.floor(p * origText.length);
-    let out = '';
-    for (let i = 0; i < origText.length; i++) {
-      const c = origText[i];
-      if (c === ' ' || c === '\n') { out += c; }
-      else if (i < resolved) { out += c; }
-      else { out += CHARS[Math.floor(Math.random() * CHARS.length)]; }
-    }
-    el.textContent = out;
-    if (p < 1) requestAnimationFrame(frame);
-    else { el.innerHTML = origHTML; el.classList.remove('scramble-active'); }
-  }
-  requestAnimationFrame(frame);
-}
-
-// --- Stats counter ---
-function countUp(el, target, suffix) {
-  const dur = 1400, start = performance.now();
-  function frame(ts) {
-    const p = Math.min((ts - start) / dur, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    el.innerHTML = Math.floor(eased * target) + '<span>' + suffix + '</span>';
-    if (p < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
-let statsDone = false;
-
-// --- Active nav section ---
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-function updateActiveNav() {
-  let cur = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
-  navLinks.forEach(a => a.classList.toggle('nav-active', a.getAttribute('href') === '#' + cur));
-}
-window.addEventListener('scroll', updateActiveNav, { passive: true });
-
-// --- 3D card tilt ---
-function addTilt(selector, maxAngle = 6) {
-  document.querySelectorAll(selector).forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(700px) rotateY(${x * maxAngle}deg) rotateX(${-y * maxAngle}deg) translateZ(6px)`;
-    });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-  });
-}
-addTilt('.project-card', 5);
-addTilt('.skill-card', 4);
-
-// --- Scroll reveal with extras ---
-const skillsGrid = document.querySelector('.skills-grid');
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    // Skills stagger
-    if (el === skillsGrid) { el.classList.add('revealed'); el.classList.add('visible'); io.unobserve(el); return; }
-    // h2 scramble
-    if (el.tagName === 'H2') { el.classList.add('visible'); scramble(el); io.unobserve(el); return; }
-    // section-label line
-    if (el.classList.contains('section-label')) { el.classList.add('visible'); io.unobserve(el); return; }
-    // stats counter
-    if (!statsDone && el.classList.contains('hero-meta')) {
-      statsDone = true;
-      const nums = el.querySelectorAll('.meta-num');
-      if (nums[0]) countUp(nums[0], 20, '+');
-      if (nums[1]) countUp(nums[1], 3, '×');
-      io.unobserve(el); return;
-    }
-    el.classList.add('visible');
-    io.unobserve(el);
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.reveal, h2, .section-label').forEach(el => io.observe(el));
-io.observe(skillsGrid);
-// Hero meta counter fires after intro animation
-const heroMeta = document.querySelector('.hero-meta');
-if (heroMeta) {
-  setTimeout(() => {
-    countUp(heroMeta.querySelectorAll('.meta-num')[0], 20, '+');
-    countUp(heroMeta.querySelectorAll('.meta-num')[1], 3, '×');
-  }, 950);
-}
-
-// --- Legislation toggle ---
-document.getElementById('legisToggle').addEventListener('click',function(){
-  const c=document.getElementById('legisContent');
-  const open=c.style.display==='none';
-  c.style.display=open?'block':'none';
-  this.classList.toggle('open',open);
-});
-
-// --- Terminal animation ---
-const termLines=[
-  {c:'cmd',t:'python main.py --config config.json'},
-  {c:'ok', t:'Session restored from cookies.json'},
-  {c:'ok', t:'Steam connection established'},
-  {c:'info',t:'Notification poll active (15s interval)'},
-  {c:'blank',t:''},
-  {c:'dim', t:'[14:32:01] Heartbeat...'},
-  {c:'hi',  t:'[14:32:07] New sale detected!'},
-  {c:'dim', t:'  AK-47 | Redline FT  ·  $24.80'},
-  {c:'ok',  t:'[14:32:08] Trade offer #3842719048 sent'},
-  {c:'ok',  t:'[14:32:09] Steam Guard confirmed ✓'},
-  {c:'blank',t:''},
-  {c:'dim', t:'[14:33:15] Polling...'},
-];
-const termOut=document.getElementById('termOut');
-let termIdx=0;
-function termNext(){
-  if(termIdx>=termLines.length){ setTimeout(()=>{ termOut.innerHTML=''; termIdx=0; termNext(); },3500); return; }
-  const l=termLines[termIdx++];
-  if(termIdx>1){ const prev=termOut.lastElementChild; if(prev) prev.classList.remove('cursor'); }
-  const span=document.createElement('span');
-  span.className='tl '+l.c+(termIdx===termLines.length?' cursor':'');
-  span.textContent=l.t;
-  termOut.appendChild(span);
-  termOut.scrollTop=termOut.scrollHeight;
-  setTimeout(termNext, l.c==='blank'?200: 350+Math.random()*300);
-}
-setTimeout(termNext,800);
-</script>
+<script src="assets/common.js"></script>
 </body>
 </html>
