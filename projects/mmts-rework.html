@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Website Rework - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills"   data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact"  data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn">
+      <button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button>
+      <button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#skills"   data-i18n="nav.skills">Skills</a>
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+  <a href="../index.html#contact"  data-i18n="nav.contact">Contact</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow">
+    <a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a>
+  </div>
+  <div class="proj-number"><span class="n">01</span> / 06 - HTML · CSS · JavaScript</div>
+  <h1 class="proj-title" data-i18n="mmts.title">Corporate Website<br>Rework</h1>
+  <p class="proj-oneliner" data-i18n="mmts.one">Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">HTML</span><span class="chip filled">CSS</span>
+      <span class="chip secondary">JavaScript</span><span class="chip secondary">WebGL</span>
+      <span class="chip surface">i18n</span><span class="chip surface">Security Headers</span>
+    </div>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="mmts.ov.b1">A complete redesign of a telecom company website. Built as a fully static site - no server-side rendering, no CMS - deployed directly via web hosting with all interactivity handled in vanilla JS.</p>
+        <p data-i18n="mmts.ov.b2">The 3D network visualization is an interactive WebGL-based topology display built without external libraries. Security hardening includes strict CSP, X-Frame-Options, HSTS and a security.txt contact file.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.features">Features</div>
+      <h3 class="proj-section-title" data-i18n="mmts.feat.title">Key capabilities</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="mmts.s1t">Bilingual content</div><div class="step-desc" data-i18n="mmts.s1d">Full RU/EN i18n system with localStorage persistence. All text switched instantly without a page reload.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="mmts.s2t">Dark / Light theme</div><div class="step-desc" data-i18n="mmts.s2d">System preference detection on first load. Smooth CSS variable transitions, persisted across sessions.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="mmts.s3t">Responsive layout</div><div class="step-desc" data-i18n="mmts.s3d">Mobile-first design across all breakpoints. Fluid grids, scalable type, touch-friendly navigation.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="mmts.s4t">3D network visualization</div><div class="step-desc" data-i18n="mmts.s4d">Interactive WebGL topology display showing network infrastructure. Mouse-controlled rotation and zoom.</div></div></div>
+        <div class="step"><div class="step-num">05</div><div><div class="step-title" data-i18n="mmts.s5t">Security hardening</div><div class="step-desc" data-i18n="mmts.s5d">CSP, X-Frame-Options, HSTS headers. sitemap.xml, robots.txt, security.txt. Optimized meta tags for SEO.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.arch">Architecture</div>
+      <h3 class="proj-section-title">Project structure</h3>
+      <div class="code-block">
+        <div class="code-bar">tree</div>
+        <pre>site/
+├── index.html
+├── assets/
+│   ├── main.css         <span class="cm"># CSS variables, layout, components</span>
+│   ├── main.js          <span class="cm"># i18n engine, theme, nav, animations</span>
+│   └── network3d.js     <span class="cm"># WebGL network visualization</span>
+├── images/
+├── sitemap.xml
+├── robots.txt
+└── security.txt</pre>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow">Security</div>
+      <h3 class="proj-section-title">Server headers</h3>
+      <div class="code-block">
+        <div class="code-bar">nginx</div>
+        <pre>Content-Security-Policy: default-src 'self'; ...
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000
+Referrer-Policy: strict-origin-when-cross-origin</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">HTML5</span><span class="chip filled">CSS3</span>
+        <span class="chip secondary">JavaScript ES6+</span><span class="chip secondary">WebGL</span>
+        <span class="chip surface">i18n</span><span class="chip surface">SEO</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.requirements">Deployment</div>
+      <div class="chips-row">
+        <span class="chip surface">Static hosting</span>
+        <span class="chip surface">Nginx / Apache</span>
+        <span class="chip surface">No build step</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="../index.html#projects"><span>← All projects</span><span class="sidebar-link-arr">←</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

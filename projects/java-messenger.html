@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Spring Messenger - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills"   data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact"  data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn">
+      <button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button>
+      <button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#skills"   data-i18n="nav.skills">Skills</a>
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+  <a href="../index.html#contact"  data-i18n="nav.contact">Contact</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow">
+    <a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a>
+  </div>
+  <div class="proj-number"><span class="n">06</span> / 06 - Java · Spring Boot · Backend</div>
+  <h1 class="proj-title" data-i18n="jms.title">Java Spring<br>Messenger</h1>
+  <p class="proj-oneliner" data-i18n="jms.one">Educational backend project implementing a messaging system with Spring Boot. REST API, user management, message threading and standard Spring layered architecture.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Java</span><span class="chip filled">Spring Boot</span>
+      <span class="chip secondary">Spring Security</span><span class="chip secondary">Spring Data JPA</span>
+      <span class="chip surface">REST API</span><span class="chip surface">PostgreSQL</span>
+    </div>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="jms.ov.b1">A backend-only messaging service built to explore Spring Boot architecture. Covers the full request lifecycle from REST controller through service layer to JPA repository, with Spring Security for auth.</p>
+        <p data-i18n="jms.ov.b2">Designed as a learning project, the codebase demonstrates idiomatic Spring patterns: dependency injection, transaction management, DTO mapping and integration testing with MockMvc.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.features">Features</div>
+      <h3 class="proj-section-title" data-i18n="jms.feat.title">Key capabilities</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="jms.s1t">User management</div><div class="step-desc" data-i18n="jms.s1d">Registration, login, profile CRUD. Password hashing with BCrypt. JWT-based stateless authentication.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="jms.s2t">Messaging logic</div><div class="step-desc" data-i18n="jms.s2d">Send and receive messages. Conversation threading by participants. Paginated message history.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="jms.s3t">REST API</div><div class="step-desc" data-i18n="jms.s3d">Standard HTTP methods and status codes. JSON request/response. Input validation with Spring Validator.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="jms.s4t">Spring architecture</div><div class="step-desc" data-i18n="jms.s4d">Clean Controller → Service → Repository layering. Spring Data JPA with H2 (dev) and PostgreSQL (prod).</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.arch">Architecture</div>
+      <h3 class="proj-section-title" data-i18n="jms.arch.title">Project structure</h3>
+      <div class="code-block">
+        <div class="code-bar">tree</div>
+        <pre>src/main/java/
+└── messenger/
+    ├── controller/
+    │   ├── AuthController.java      <span class="cm"># /api/auth/*</span>
+    │   ├── UserController.java      <span class="cm"># /api/users/*</span>
+    │   └── MessageController.java   <span class="cm"># /api/messages/*</span>
+    ├── service/
+    │   ├── AuthService.java
+    │   ├── UserService.java
+    │   └── MessageService.java
+    ├── repository/
+    │   ├── UserRepository.java
+    │   └── MessageRepository.java
+    ├── model/
+    │   ├── User.java
+    │   └── Message.java
+    ├── dto/                         <span class="cm"># Request/response DTOs</span>
+    ├── security/                    <span class="cm"># JWT filter, Spring Security config</span>
+    └── config/</pre>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow">API</div>
+      <h3 class="proj-section-title">REST endpoints</h3>
+      <div class="code-block">
+        <div class="code-bar">http</div>
+        <pre><span class="cm"># Auth</span>
+POST  /api/auth/register   <span class="cm"># { username, email, password }</span>
+POST  /api/auth/login      <span class="cm"># { email, password } → JWT</span>
+
+<span class="cm"># Users</span>
+GET   /api/users/me        <span class="cm"># current user profile</span>
+PUT   /api/users/me        <span class="cm"># update profile</span>
+
+<span class="cm"># Messages</span>
+GET   /api/messages        <span class="cm"># ?with=userId&page=0&size=20</span>
+POST  /api/messages        <span class="cm"># { recipientId, content }</span>
+GET   /api/conversations   <span class="cm"># list all conversations</span></pre>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title">Running locally</h3>
+      <div class="code-block">
+        <div class="code-bar">bash</div>
+        <pre><span class="cm"># Requires Java 17+ and Maven</span>
+mvn spring-boot:run
+
+<span class="cm"># Runs on http://localhost:8080</span>
+<span class="cm"># H2 console: http://localhost:8080/h2-console</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Java 17</span><span class="chip filled">Spring Boot 3</span>
+        <span class="chip secondary">Spring Security</span><span class="chip secondary">Spring Data JPA</span>
+        <span class="chip surface">JWT</span><span class="chip surface">H2 / PostgreSQL</span><span class="chip surface">Maven</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.requirements">Requirements</div>
+      <div class="chips-row">
+        <span class="chip surface">Java 17+</span>
+        <span class="chip surface">Maven 3.8+</span>
+        <span class="chip surface">PostgreSQL (prod)</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="../index.html#projects"><span>← All projects</span><span class="sidebar-link-arr">←</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

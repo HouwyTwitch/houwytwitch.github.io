@@ -195,6 +195,47 @@ const T = {
     'flt.s2t':'Upload to GPU',     'flt.s2d':'Input values transferred to GPU memory. CUDA kernel compiled and launched across all cores.',
     'flt.s3t':'Parallel search',   'flt.s3d':'Each GPU thread evaluates a subset of combinations, computing the weighted average.',
     'flt.s4t':'Return results',    'flt.s4d':'Matching combinations collected from GPU memory and returned for use.',
+
+    /* Corporate Website Rework */
+    'mmts.title':       'Corporate Website\nRework',
+    'mmts.one':         'Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.',
+    'mmts.ov.b1':       'A complete redesign of a telecom company website. Built as a fully static site - no server-side rendering, no CMS - deployed directly via web hosting with all interactivity handled in vanilla JS.',
+    'mmts.ov.b2':       'The 3D network visualization is an interactive WebGL-based topology display built without external libraries. Security hardening includes strict CSP, X-Frame-Options, HSTS and a security.txt contact file.',
+    'mmts.feat.title':  'Key capabilities',
+    'mmts.s1t':'Bilingual content',      'mmts.s1d':'Full RU/EN i18n system with localStorage persistence. All text switched instantly without a page reload.',
+    'mmts.s2t':'Dark / Light theme',     'mmts.s2d':'System preference detection on first load. Smooth CSS variable transitions, persisted across sessions.',
+    'mmts.s3t':'Responsive layout',      'mmts.s3d':'Mobile-first design across all breakpoints. Fluid grids, scalable type, touch-friendly navigation.',
+    'mmts.s4t':'3D network visualization','mmts.s4d':'Interactive WebGL topology display showing network infrastructure. Mouse-controlled rotation and zoom.',
+    'mmts.s5t':'Security hardening',     'mmts.s5d':'CSP, X-Frame-Options, HSTS headers. sitemap.xml, robots.txt, security.txt. Optimized meta tags for SEO.',
+
+    /* ML Anti-Phishing Extension */
+    'aph.title':        'ML Anti-Phishing\nExtension',
+    'aph.one':          'Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection. Fully self-hosted.',
+    'aph.ov.b1':        'A two-part security tool: a Chromium extension intercepts every navigation event and POSTs the URL to a local Flask API before the page loads. The server checks the URL against configurable lists and an ML classifier, then returns a verdict.',
+    'aph.ov.b2':        'The entire stack runs locally via Docker Compose - no external services, no telemetry. The extension communicates only with the self-hosted server, so no browsing data leaves the machine.',
+    'aph.feat.title':   'Key capabilities',
+    'aph.s1t':'Real-time URL checking',  'aph.s1d':'Intercepts all navigation events before the page loads. Zero user action required.',
+    'aph.s2t':'Blacklist / Whitelist',   'aph.s2d':'Fast configurable local lookup. Add domains via the settings page or API. Checked before ML for instant known-bad blocking.',
+    'aph.s3t':'ML-based detection',      'aph.s3d':'Trained URL classifier for unknown domains. Configurable confidence threshold for blocking vs. warning.',
+    'aph.s4t':'Rate limiting',           'aph.s4d':'Per-IP request throttling on the API server prevents misuse and keeps the local service responsive.',
+    'aph.s5t':'Docker deployment',       'aph.s5d':'Full stack runs with a single docker compose up. Easily self-hosted on any machine with Docker.',
+    'aph.hw.title':     'How it works',
+    'aph.hw.s1t':'Intercept',   'aph.hw.s1d':'Extension catches the navigation event before the page loads and extracts the URL.',
+    'aph.hw.s2t':'POST to API', 'aph.hw.s2d':'Extension sends the URL to the local Flask server. Connection is to localhost only.',
+    'aph.hw.s3t':'Analysis',    'aph.hw.s3d':'Server checks blacklist → whitelist → ML classifier in sequence. First match wins.',
+    'aph.hw.s4t':'Verdict',     'aph.hw.s4d':'Safe / Phishing / Unknown verdict returned with a confidence score. Extension shows indicator or blocks.',
+
+    /* Java Spring Messenger */
+    'jms.title':        'Java Spring\nMessenger',
+    'jms.one':          'Educational backend project implementing a messaging system with Spring Boot. REST API, user management, message threading and standard Spring layered architecture.',
+    'jms.ov.b1':        'A backend-only messaging service built to explore Spring Boot architecture. Covers the full request lifecycle from REST controller through service layer to JPA repository, with Spring Security for auth.',
+    'jms.ov.b2':        'Designed as a learning project, the codebase demonstrates idiomatic Spring patterns: dependency injection, transaction management, DTO mapping and integration testing with MockMvc.',
+    'jms.feat.title':   'Key capabilities',
+    'jms.s1t':'User management',   'jms.s1d':'Registration, login, profile CRUD. Password hashing with BCrypt. JWT-based stateless authentication.',
+    'jms.s2t':'Messaging logic',   'jms.s2d':'Send and receive messages. Conversation threading by participants. Paginated message history.',
+    'jms.s3t':'REST API',          'jms.s3d':'Standard HTTP methods and status codes. JSON request/response. Input validation with Spring Validator.',
+    'jms.s4t':'Spring architecture','jms.s4d':'Clean Controller → Service → Repository layering. Spring Data JPA with H2 (dev) and PostgreSQL (prod).',
+    'jms.arch.title':   'Architecture',
   },
 
   ru: {
@@ -388,6 +429,47 @@ const T = {
     'flt.s2t':'Загрузка на GPU',   'flt.s2d':'Значения передаются в память GPU. CUDA-ядро компилируется и запускается на всех ядрах.',
     'flt.s3t':'Параллельный поиск','flt.s3d':'Каждый поток GPU оценивает подмножество комбинаций, вычисляя взвешенное среднее.',
     'flt.s4t':'Возврат результатов','flt.s4d':'Подходящие комбинации собираются из памяти GPU и возвращаются для использования.',
+
+    /* Редизайн корпоративного сайта */
+    'mmts.title':       'Редизайн\nкорпоративного сайта',
+    'mmts.one':         'Статический корпоративный сайт с локализацией RU/EN, тёмной/светлой темой, адаптивной вёрсткой, интерактивной 3D-визуализацией сети, security-заголовками и SEO-файлами.',
+    'mmts.ov.b1':       'Полный редизайн сайта телекоммуникационной компании. Статический сайт без серверного рендеринга и CMS — размещается напрямую на хостинге, весь интерактив реализован на ванильном JS.',
+    'mmts.ov.b2':       '3D-визуализация сети — интерактивный WebGL-дисплей топологии без внешних библиотек. Безопасность: строгий CSP, X-Frame-Options, HSTS и файл security.txt.',
+    'mmts.feat.title':  'Ключевые возможности',
+    'mmts.s1t':'Двуязычный контент',         'mmts.s1d':'Полная i18n-система с localStorage. Весь текст переключается мгновенно без перезагрузки страницы.',
+    'mmts.s2t':'Тёмная / Светлая тема',      'mmts.s2d':'Определение системных предпочтений при первом входе. Плавные CSS-переходы, сохранение между сессиями.',
+    'mmts.s3t':'Адаптивная вёрстка',         'mmts.s3d':'Mobile-first дизайн для всех брейкпоинтов. Жидкие сетки, масштабируемая типографика, touch-навигация.',
+    'mmts.s4t':'3D-визуализация сети',        'mmts.s4d':'Интерактивный WebGL-дисплей сетевой инфраструктуры. Управление поворотом и зумом мышью.',
+    'mmts.s5t':'Security-hardening',          'mmts.s5d':'CSP, X-Frame-Options, HSTS. sitemap.xml, robots.txt, security.txt. Оптимизированные meta-теги для SEO.',
+
+    /* ML Антифишинговое расширение */
+    'aph.title':        'ML Антифишинговое\nРасширение',
+    'aph.one':          'Chromium-расширение и Python API-сервер для проверки репутации URL, валидации чёрного/белого списков и ML-детекции фишинга. Полностью self-hosted.',
+    'aph.ov.b1':        'Двухкомпонентный security-инструмент: Chromium-расширение перехватывает каждое навигационное событие и отправляет URL на локальный Flask API до загрузки страницы. Сервер проверяет URL по настраиваемым спискам и ML-классификатору, возвращает вердикт.',
+    'aph.ov.b2':        'Весь стек запускается локально через Docker Compose - без внешних сервисов и телеметрии. Расширение общается только с self-hosted сервером, данные браузинга не покидают машину.',
+    'aph.feat.title':   'Ключевые возможности',
+    'aph.s1t':'Проверка URL в реальном времени','aph.s1d':'Перехватывает все навигационные события до загрузки страницы. Не требует действий пользователя.',
+    'aph.s2t':'Чёрный / Белый список',        'aph.s2d':'Быстрый локальный поиск. Добавление доменов через страницу настроек или API. Проверяется до ML.',
+    'aph.s3t':'ML-детекция',                   'aph.s3d':'Обученный классификатор URL для неизвестных доменов. Настраиваемый порог уверенности для блокировки.',
+    'aph.s4t':'Rate limiting',                 'aph.s4d':'Ограничение запросов по IP на API-сервере предотвращает злоупотребления.',
+    'aph.s5t':'Docker-деплой',                 'aph.s5d':'Полный стек запускается одной командой docker compose up. Легко self-hosted на любой машине с Docker.',
+    'aph.hw.title':     'Как это работает',
+    'aph.hw.s1t':'Перехват',       'aph.hw.s1d':'Расширение перехватывает навигационное событие до загрузки страницы и извлекает URL.',
+    'aph.hw.s2t':'POST на API',    'aph.hw.s2d':'Расширение отправляет URL на локальный Flask-сервер. Соединение только с localhost.',
+    'aph.hw.s3t':'Анализ',         'aph.hw.s3d':'Сервер проверяет: чёрный список → белый список → ML-классификатор. Первое совпадение побеждает.',
+    'aph.hw.s4t':'Вердикт',        'aph.hw.s4d':'Возвращается safe / phishing / unknown с оценкой уверенности. Расширение показывает индикатор или блокирует.',
+
+    /* Java Spring Мессенджер */
+    'jms.title':        'Java Spring\nМессенджер',
+    'jms.one':          'Учебный backend-проект: система обмена сообщениями на Spring Boot. REST API, управление пользователями, треды сообщений и стандартная слоистая архитектура Spring.',
+    'jms.ov.b1':        'Backend-сервис обмена сообщениями, созданный для изучения архитектуры Spring Boot. Охватывает полный жизненный цикл запроса: REST-контроллер → сервисный слой → JPA-репозиторий, с Spring Security для аутентификации.',
+    'jms.ov.b2':        'Разработан как учебный проект, кодовая база демонстрирует идиоматические паттерны Spring: dependency injection, управление транзакциями, DTO-маппинг и интеграционное тестирование с MockMvc.',
+    'jms.feat.title':   'Ключевые возможности',
+    'jms.s1t':'Управление пользователями','jms.s1d':'Регистрация, вход, CRUD профиля. Хэширование паролей BCrypt. JWT-аутентификация без состояния.',
+    'jms.s2t':'Логика сообщений',        'jms.s2d':'Отправка и получение сообщений. Треды по участникам. Постраничная история сообщений.',
+    'jms.s3t':'REST API',                'jms.s3d':'Стандартные HTTP-методы и коды статусов. JSON запрос/ответ. Валидация входных данных Spring Validator.',
+    'jms.s4t':'Архитектура Spring',      'jms.s4d':'Чёткое разделение Controller → Service → Repository. Spring Data JPA с H2 (dev) и PostgreSQL (prod).',
+    'jms.arch.title':   'Архитектура',
   }
 };
 
