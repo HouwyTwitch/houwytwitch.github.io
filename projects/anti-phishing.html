@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Anti-Phishing Extension - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills"   data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact"  data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn">
+      <button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button>
+      <button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#skills"   data-i18n="nav.skills">Skills</a>
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+  <a href="../index.html#contact"  data-i18n="nav.contact">Contact</a>
+  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow">
+    <a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a>
+  </div>
+  <div class="proj-number"><span class="n">02</span> / 06 - Python · Flask · Chrome Extension · ML</div>
+  <h1 class="proj-title" data-i18n="aph.title">ML Anti-Phishing<br>Extension</h1>
+  <p class="proj-oneliner" data-i18n="aph.one">Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection. Fully self-hosted.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Python</span><span class="chip filled">Flask</span>
+      <span class="chip secondary">Chrome Extension</span><span class="chip secondary">ML</span>
+      <span class="chip surface">Docker</span><span class="chip surface">Security</span>
+    </div>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="aph.ov.b1">A two-part security tool: a Chromium extension intercepts every navigation event and POSTs the URL to a local Flask API before the page loads. The server checks the URL against configurable lists and an ML classifier, then returns a verdict.</p>
+        <p data-i18n="aph.ov.b2">The entire stack runs locally via Docker Compose - no external services, no telemetry. The extension communicates only with the self-hosted server, so no browsing data leaves the machine.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.features">Features</div>
+      <h3 class="proj-section-title" data-i18n="aph.feat.title">Key capabilities</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="aph.s1t">Real-time URL checking</div><div class="step-desc" data-i18n="aph.s1d">Intercepts all navigation events before the page loads. Zero user action required.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="aph.s2t">Blacklist / Whitelist</div><div class="step-desc" data-i18n="aph.s2d">Fast configurable local lookup. Add domains via the settings page or API. Checked before ML for instant known-bad blocking.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="aph.s3t">ML-based detection</div><div class="step-desc" data-i18n="aph.s3d">Trained URL classifier for unknown domains. Configurable confidence threshold for blocking vs. warning.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="aph.s4t">Rate limiting</div><div class="step-desc" data-i18n="aph.s4d">Per-IP request throttling on the API server prevents misuse and keeps the local service responsive.</div></div></div>
+        <div class="step"><div class="step-num">05</div><div><div class="step-title" data-i18n="aph.s5t">Docker deployment</div><div class="step-desc" data-i18n="aph.s5d">Full stack runs with a single docker compose up. Easily self-hosted on any machine with Docker.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.howit">How it works</div>
+      <h3 class="proj-section-title" data-i18n="aph.hw.title">Detection flow</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="aph.hw.s1t">Intercept</div><div class="step-desc" data-i18n="aph.hw.s1d">Extension catches the navigation event before the page loads and extracts the URL.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="aph.hw.s2t">POST to API</div><div class="step-desc" data-i18n="aph.hw.s2d">Extension sends the URL to the local Flask server. Connection is to localhost only.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="aph.hw.s3t">Analysis</div><div class="step-desc" data-i18n="aph.hw.s3d">Server checks blacklist → whitelist → ML classifier in sequence. First match wins.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="aph.hw.s4t">Verdict</div><div class="step-desc" data-i18n="aph.hw.s4d">Safe / Phishing / Unknown verdict returned with a confidence score. Extension shows indicator or blocks.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.arch">Architecture</div>
+      <h3 class="proj-section-title">Project structure</h3>
+      <div class="code-block">
+        <div class="code-bar">tree</div>
+        <pre>anti-phishing/
+├── extension/
+│   ├── manifest.json       <span class="cm"># Manifest V3</span>
+│   ├── background.js       <span class="cm"># Service worker, intercept logic</span>
+│   ├── content_script.js   <span class="cm"># Page-level indicator injection</span>
+│   └── popup/              <span class="cm"># Settings UI</span>
+├── server/
+│   ├── app.py              <span class="cm"># Flask API</span>
+│   ├── classifier.py       <span class="cm"># ML model wrapper</span>
+│   ├── lists.py            <span class="cm"># Blacklist / whitelist manager</span>
+│   ├── model/              <span class="cm"># Trained model files</span>
+│   └── requirements.txt
+└── docker-compose.yml</pre>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title">Running the server</h3>
+      <div class="code-block">
+        <div class="code-bar">bash</div>
+        <pre><span class="cm"># Start the API server</span>
+docker compose up -d
+
+<span class="cm"># Load the extension</span>
+<span class="cm"># Chrome → Extensions → Load unpacked → /extension</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Python 3.10+</span><span class="chip filled">Flask</span>
+        <span class="chip secondary">scikit-learn</span><span class="chip secondary">Chrome Extension MV3</span>
+        <span class="chip surface">Docker</span><span class="chip surface">Compose</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.requirements">Requirements</div>
+      <div class="chips-row">
+        <span class="chip surface">Docker + Compose</span>
+        <span class="chip surface">Chromium browser</span>
+        <span class="chip surface">Python 3.10+</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="../index.html#projects"><span>← All projects</span><span class="sidebar-link-arr">←</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+<script src="../assets/common.js"></script>
+</body>
+</html>

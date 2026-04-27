@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern SDA - Houwy</title>
+<title>Desktop 2FA Authenticator - Houwy</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/m3.css">
@@ -41,14 +41,14 @@
   <div class="proj-eyebrow">
     <a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a>
   </div>
-  <div class="proj-number"><span class="n">01</span> / 07 - Python · Desktop</div>
-  <h1 class="proj-title" data-i18n="msda.title">Modern<br>SDA</h1>
-  <p class="proj-oneliner" data-i18n="msda.one">A modern PyQt5 Steam Desktop Authenticator. Multi-account management, live TOTP codes, all confirmation types, and per-account proxy support.</p>
+  <div class="proj-number"><span class="n">03</span> / 06 - Python · Desktop · Security</div>
+  <h1 class="proj-title" data-i18n="msda.title">Desktop 2FA<br>Authenticator</h1>
+  <p class="proj-oneliner" data-i18n="msda.one">A desktop application for managing multiple authenticator profiles. Generates live TOTP codes with a countdown timer and handles secure local account data storage.</p>
   <div class="proj-hero-actions">
     <div class="chips-row">
       <span class="chip filled">Python</span><span class="chip filled">PyQt5</span>
-      <span class="chip secondary">asyncio</span><span class="chip secondary">Steam API</span>
-      <span class="chip surface">aiosteampy</span><span class="chip surface">aiohttp</span>
+      <span class="chip secondary">asyncio</span><span class="chip secondary">TOTP</span>
+      <span class="chip surface">aiohttp</span><span class="chip surface">Security</span>
     </div>
     <a href="https://github.com/HouwyTwitch/Modern-SDA" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
   </div>
@@ -70,8 +70,8 @@
       <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
       <h3 class="proj-section-title" data-i18n="msda.feat.title">What it does</h3>
       <div class="proj-section-body">
-        <p data-i18n="msda.ov.body">Modern SDA is a full replacement for the original Steam Desktop Authenticator. It manages multiple Steam accounts simultaneously, generates live Guard codes with a countdown timer, and handles every type of Steam confirmation.</p>
-        <p data-i18n="msda.ov.b2">Built with PyQt5 for a native desktop feel, it stores refresh tokens so you never re-login on every launch.</p>
+        <p data-i18n="msda.ov.body">A full-featured desktop authenticator built with PyQt5. Manages multiple accounts simultaneously, generates live 2FA codes with a countdown timer, and handles all types of authenticator confirmations without requiring a mobile device.</p>
+        <p data-i18n="msda.ov.b2">Built with PyQt5 for a native desktop feel. Stores refresh tokens locally so you never re-login on every launch. Local-first architecture - no data leaves your machine.</p>
       </div>
     </div>
 
@@ -79,10 +79,10 @@
       <div class="proj-section-label section-eyebrow" data-i18n="proj.features">Features</div>
       <h3 class="proj-section-title" data-i18n="msda.feat.title">Key capabilities</h3>
       <div class="steps">
-        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="s1t">Multiple accounts</div><div class="step-desc" data-i18n="s1d">Add and manage as many Steam accounts as needed. Filter by name or Steam ID.</div></div></div>
-        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="s2t">Live TOTP codes</div><div class="step-desc" data-i18n="s2d">Generates Steam Guard codes with a live countdown timer.</div></div></div>
-        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="s3t">All confirmation types</div><div class="step-desc" data-i18n="s3d">Accepts any Steam confirmation: trades, market listings, API key activations.</div></div></div>
-        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="s4t">Session persistence</div><div class="step-desc" data-i18n="s4d">Stores refresh tokens so you don't re-login on every launch.</div></div></div>
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="s1t">Multiple accounts</div><div class="step-desc" data-i18n="s1d">Add and manage as many authenticator accounts as needed. Filter by name or identifier.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="s2t">Live TOTP codes</div><div class="step-desc" data-i18n="s2d">Generates 2FA codes with a live countdown timer - always ready.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="s3t">Confirmation handling</div><div class="step-desc" data-i18n="s3d">Accepts and manages pending authenticator confirmations of all types.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="s4t">Session persistence</div><div class="step-desc" data-i18n="s4d">Stores tokens locally so you don't re-login on every launch.</div></div></div>
         <div class="step"><div class="step-num">05</div><div><div class="step-title" data-i18n="s5t">Themes</div><div class="step-desc" data-i18n="s5d">Built-in dark, light, and high-contrast themes with live switching.</div></div></div>
       </div>
     </div>
@@ -96,7 +96,7 @@
         <pre>pip install PyQt5 aiosteampy aiohttp
 python main.py</pre>
       </div>
-      <p class="proj-section-body" style="margin-top:12px" data-i18n="msda.inst.b2">To add an account, click +, select your .mafile, enter password and optional proxy.</p>
+      <p class="proj-section-body" style="margin-top:12px" data-i18n="msda.inst.b2">To add an account, click +, select your account file and enter credentials.</p>
     </div>
 
     <div class="proj-section reveal">
@@ -118,8 +118,8 @@ python main.py</pre>
       <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
       <div class="chips-row">
         <span class="chip filled">Python 3.10+</span><span class="chip filled">PyQt5</span>
-        <span class="chip secondary">asyncio</span><span class="chip secondary">aiosteampy</span>
-        <span class="chip surface">aiohttp</span><span class="chip surface">JSON</span>
+        <span class="chip secondary">asyncio</span><span class="chip secondary">aiohttp</span>
+        <span class="chip surface">TOTP</span><span class="chip surface">JSON</span>
       </div>
     </div>
     <div class="sidebar-card reveal">
@@ -127,7 +127,6 @@ python main.py</pre>
       <div class="chips-row">
         <span class="chip surface">Python 3.10+</span>
         <span class="chip surface">Windows / Linux / macOS</span>
-        <span class="chip surface">.mafile from SDA</span>
       </div>
     </div>
     <div class="sidebar-card reveal">
