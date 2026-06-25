@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-NTP Time Sync - Houwy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312140e'/%3E%3Ctext x='4' y='24' font-family='sans-serif' font-size='20' font-weight='900' fill='%23c8f135'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/m3.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header class="top-bar">
+  <a class="top-bar-logo" href="../index.html"><span class="logo-dot"></span>Houwy</a>
+  <ul class="top-bar-nav">
+    <li><a href="../index.html#skills"   data-i18n="nav.skills">Skills</a></li>
+    <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="../index.html#contact"  data-i18n="nav.contact">Contact</a></li>
+    <li><a href="https://github.com/HouwyTwitch/win-time-sync-tool" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <div class="top-bar-actions">
+    <div class="seg-btn">
+      <button class="seg-opt" data-lang="en" onclick="applyLang('en')">EN</button>
+      <button class="seg-opt" data-lang="ru" onclick="applyLang('ru')">RU</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="ham-btn" id="hamBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="nav-sheet" id="navSheet">
+  <a href="../index.html#skills"   data-i18n="nav.skills">Skills</a>
+  <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
+  <a href="../index.html#contact"  data-i18n="nav.contact">Contact</a>
+  <a href="https://github.com/HouwyTwitch/win-time-sync-tool" target="_blank">GitHub ↗</a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-eyebrow">
+    <a href="../index.html" class="btn btn-text" style="padding-left:0;font-size:13px" data-i18n="proj.back">← Projects</a>
+  </div>
+  <div class="proj-number"><span class="n">06</span> / 09 - Python · Desktop · Networking</div>
+  <h1 class="proj-title" data-i18n="nts.title">Multi-NTP<br>Time Sync</h1>
+  <p class="proj-oneliner" data-i18n="nts.one">A Windows desktop app that synchronises the system clock against many NTP servers at once and applies the median offset with microsecond precision.</p>
+  <div class="proj-hero-actions">
+    <div class="chips-row">
+      <span class="chip filled">Python</span><span class="chip filled">CustomTkinter</span>
+      <span class="chip secondary">ntplib</span><span class="chip secondary">NTP v4</span>
+      <span class="chip surface">Windows API</span><span class="chip surface">pystray</span>
+    </div>
+    <a href="https://github.com/HouwyTwitch/win-time-sync-tool" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
+  </div>
+</div>
+
+<div class="proj-content">
+  <div class="proj-main">
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.overview">Overview</div>
+      <h3 class="proj-section-title">What it does</h3>
+      <div class="proj-section-body">
+        <p data-i18n="nts.ov.b1">Rather than trusting a single time source, the tool queries dozens of servers concurrently and takes the median offset, so one misbehaving or drifting server cannot skew the result.</p>
+        <p data-i18n="nts.ov.b2">Corrections are written through the Windows FILETIME API at 100-nanosecond resolution, with rounding applied before scaling to avoid floating-point drift. A live clock updates at 30 fps.</p>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.features">Features</div>
+      <h3 class="proj-section-title" data-i18n="nts.feat.title">Key capabilities</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="nts.s1t">Multi-server median</div><div class="step-desc" data-i18n="nts.s1d">Queries all active servers simultaneously and uses the median offset to reject outliers.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="nts.s2t">Microsecond precision</div><div class="step-desc" data-i18n="nts.s2d">Offsets shown in microseconds; time set via Windows FILETIME at 100 ns resolution.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="nts.s3t">150+ server catalog</div><div class="step-desc" data-i18n="nts.s3d">Google, Cloudflare, Amazon, NIST, Apple and regional pools built in - add your own too.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="nts.s4t">Background sync</div><div class="step-desc" data-i18n="nts.s4d">Configurable auto-sync interval from 30 seconds to 1 hour while minimised to the system tray.</div></div></div>
+        <div class="step"><div class="step-num">05</div><div><div class="step-title" data-i18n="nts.s5t">Live diagnostics</div><div class="step-desc" data-i18n="nts.s5d">Per-server status, offset, round-trip time and stratum, with dark and light themes.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.howit">How it works</div>
+      <h3 class="proj-section-title" data-i18n="nts.hw.title">How it works</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title" data-i18n="nts.hw.s1t">Concurrent query</div><div class="step-desc" data-i18n="nts.hw.s1d">All servers receive NTP v4 requests through a thread pool, capturing offset, delay and stratum.</div></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title" data-i18n="nts.hw.s2t">Median offset</div><div class="step-desc" data-i18n="nts.hw.s2d">Responses with stratum above 4 or errors are dropped; the median of the rest is taken.</div></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title" data-i18n="nts.hw.s3t">Apply correction</div><div class="step-desc" data-i18n="nts.hw.s3d">Current UTC plus the median offset is converted to FILETIME and written with SetSystemTimeAsFileTime.</div></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title" data-i18n="nts.hw.s4t">Report accuracy</div><div class="step-desc" data-i18n="nts.hw.s4d">Displayed as half the average round-trip delay - the theoretical one-way uncertainty.</div></div></div>
+      </div>
+    </div>
+
+    <div class="proj-section reveal">
+      <div class="proj-section-label section-eyebrow" data-i18n="proj.install">Installation</div>
+      <h3 class="proj-section-title" data-i18n="nts.inst.title">Running locally</h3>
+      <div class="code-block">
+        <div class="code-bar">bash</div>
+        <pre>git clone https://github.com/HouwyTwitch/win-time-sync-tool.git
+cd win-time-sync-tool
+pip install -r requirements.txt
+
+<span class="cm"># run elevated to actually set the clock</span>
+python main.py</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.techstack">Tech Stack</div>
+      <div class="chips-row">
+        <span class="chip filled">Python 3.9+</span><span class="chip filled">CustomTkinter</span>
+        <span class="chip secondary">ntplib</span><span class="chip secondary">pystray</span>
+        <span class="chip surface">Pillow</span><span class="chip surface">Windows API</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.requirements">Requirements</div>
+      <div class="chips-row">
+        <span class="chip surface">Windows 10/11</span>
+        <span class="chip surface">Python 3.9+</span>
+        <span class="chip surface">Admin (to set time)</span>
+      </div>
+    </div>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/win-time-sync-tool" target="_blank"><span data-i18n="proj.viewgithub">GitHub Repository</span><span class="sidebar-link-arr">↗</span></a>
+        <a class="sidebar-link" href="../index.html#projects"><span data-i18n="proj.back">← Projects</span><span class="sidebar-link-arr">←</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
+  <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script src="../assets/common.js"></script>
+</body>
+</html>

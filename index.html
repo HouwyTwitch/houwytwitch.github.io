@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="assets/m3.css">
 </head>
 <body>
+<div class="scroll-progress" id="scrollProgress"></div>
 <div class="noise-overlay"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -77,12 +78,12 @@
 
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-num" id="stat1">20<span>+</span></div>
+        <div class="hero-stat-num" id="stat1">60<span>+</span></div>
         <div class="hero-stat-label" data-i18n="hero.stat1">Repositories</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num" id="stat2">6<span>+</span></div>
-        <div class="hero-stat-label" data-i18n="hero.stat2">Open Projects</div>
+        <div class="hero-stat-num" id="stat2">9<span>+</span></div>
+        <div class="hero-stat-label" data-i18n="hero.stat2">Featured Projects</div>
       </div>
     </div>
   </div>
@@ -101,6 +102,36 @@
       </div>
       <div class="hero-card-body mono" id="termOut"></div>
     </div>
+  </div>
+</div>
+
+<!-- TECH MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">asyncio</span>
+    <span class="marquee-item">Playwright</span>
+    <span class="marquee-item">FastAPI</span>
+    <span class="marquee-item">Docker</span>
+    <span class="marquee-item">BoringSSL</span>
+    <span class="marquee-item">PostgreSQL</span>
+    <span class="marquee-item">Redis</span>
+    <span class="marquee-item">CUDA</span>
+    <span class="marquee-item">Kotlin</span>
+    <span class="marquee-item">Cryptography</span>
+    <span class="marquee-item">Linux</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">asyncio</span>
+    <span class="marquee-item">Playwright</span>
+    <span class="marquee-item">FastAPI</span>
+    <span class="marquee-item">Docker</span>
+    <span class="marquee-item">BoringSSL</span>
+    <span class="marquee-item">PostgreSQL</span>
+    <span class="marquee-item">Redis</span>
+    <span class="marquee-item">CUDA</span>
+    <span class="marquee-item">Kotlin</span>
+    <span class="marquee-item">Cryptography</span>
+    <span class="marquee-item">Linux</span>
   </div>
 </div>
 
@@ -251,40 +282,58 @@
     <h2 class="section-title headline-lg reveal" data-i18n="projects.title">Selected Projects</h2>
 
     <div class="projects-grid">
-      <a class="project-card reveal reveal-delay-1" href="projects/mmts-rework.html">
-        <div class="pc-header"><span class="pc-num mono">01</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj1.name">Corporate Website Rework</div>
-        <p class="pc-desc" data-i18n="proj1.desc">Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.</p>
-        <div class="chips-row"><span class="chip surface">HTML</span><span class="chip surface">CSS</span><span class="chip surface">JavaScript</span><span class="chip surface">i18n</span><span class="chip surface">UI</span></div>
+      <a class="project-card reveal reveal-delay-1" href="projects/tls-fingerprints.html">
+        <div class="pc-header"><span class="pc-num mono">01</span><span class="pc-badge">NEW</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj1.name">Chromium TLS Fingerprint Engine</div>
+        <p class="pc-desc" data-i18n="proj1.desc">Custom Chromium build exposing a CDP command to spoof JA3/JA3N TLS ClientHello fingerprints at runtime - cipher suites, curves, extension order - paired with a Python Playwright wrapper.</p>
+        <div class="chips-row"><span class="chip surface">C++</span><span class="chip surface">Chromium</span><span class="chip surface">BoringSSL</span><span class="chip surface">Python</span><span class="chip surface">Playwright</span></div>
       </a>
-      <a class="project-card reveal reveal-delay-2" href="projects/anti-phishing.html">
-        <div class="pc-header"><span class="pc-num mono">02</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj2.name">ML Anti-Phishing Extension</div>
-        <p class="pc-desc" data-i18n="proj2.desc">Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection.</p>
+      <a class="project-card reveal reveal-delay-2" href="projects/qrpt.html">
+        <div class="pc-header"><span class="pc-num mono">02</span><span class="pc-badge">NEW</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj2.name">Post-Quantum Crypto Toolkit</div>
+        <p class="pc-desc" data-i18n="proj2.desc">A modular Python toolkit for quantum-safe cryptography: post-quantum KEM key exchange, digital signatures and AEAD encryption with HKDF derivation, built on liboqs.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">Cryptography</span><span class="chip surface">liboqs</span><span class="chip surface">KEM</span><span class="chip surface">AEAD</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-3" href="projects/anti-phishing.html">
+        <div class="pc-header"><span class="pc-num mono">03</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj3.name">ML Anti-Phishing Extension</div>
+        <p class="pc-desc" data-i18n="proj3.desc">Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection.</p>
         <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">Flask</span><span class="chip surface">Chrome Ext</span><span class="chip surface">ML</span><span class="chip surface">Docker</span></div>
       </a>
-      <a class="project-card reveal reveal-delay-3" href="projects/modern-sda.html">
-        <div class="pc-header"><span class="pc-num mono">03</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj3.name">Desktop 2FA Authenticator</div>
-        <p class="pc-desc" data-i18n="proj3.desc">Desktop application for managing multiple authenticator profiles, generating TOTP codes and handling secure local account data.</p>
+      <a class="project-card reveal reveal-delay-1" href="projects/modern-sda.html">
+        <div class="pc-header"><span class="pc-num mono">04</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj4.name">Desktop 2FA Authenticator</div>
+        <p class="pc-desc" data-i18n="proj4.desc">Desktop application for managing multiple authenticator profiles, generating TOTP codes and handling secure local account data.</p>
         <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">PyQt5</span><span class="chip surface">TOTP</span><span class="chip surface">Security</span></div>
       </a>
-      <a class="project-card reveal reveal-delay-1" href="projects/modern-sda-android.html">
-        <div class="pc-header"><span class="pc-num mono">04</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj4.name">Android 2FA Authenticator</div>
-        <p class="pc-desc" data-i18n="proj4.desc">Native Android application built with Kotlin and Jetpack Compose for managing authenticator profiles and time-based one-time passwords.</p>
+      <a class="project-card reveal reveal-delay-2" href="projects/modern-sda-android.html">
+        <div class="pc-header"><span class="pc-num mono">05</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj5.name">Android 2FA Authenticator</div>
+        <p class="pc-desc" data-i18n="proj5.desc">Native Android application built with Kotlin and Jetpack Compose for managing authenticator profiles and time-based one-time passwords.</p>
         <div class="chips-row"><span class="chip surface">Kotlin</span><span class="chip surface">Jetpack Compose</span><span class="chip surface">TOTP</span><span class="chip surface">Security</span></div>
       </a>
-      <a class="project-card reveal reveal-delay-2" href="projects/float-master.html">
-        <div class="pc-header"><span class="pc-num mono">05</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj5.name">GPU Combinatorial Optimizer</div>
-        <p class="pc-desc" data-i18n="proj5.desc">CUDA-accelerated tool for searching optimal combinations under numeric constraints and predicting resulting values.</p>
+      <a class="project-card reveal reveal-delay-3" href="projects/win-time-sync.html">
+        <div class="pc-header"><span class="pc-num mono">06</span><span class="pc-badge">NEW</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj6.name">Multi-NTP Time Sync</div>
+        <p class="pc-desc" data-i18n="proj6.desc">Windows desktop app that queries 150+ NTP servers concurrently and applies the median offset with microsecond precision. System tray, live clock and per-server diagnostics.</p>
+        <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">CustomTkinter</span><span class="chip surface">NTP</span><span class="chip surface">Windows API</span></div>
+      </a>
+      <a class="project-card reveal reveal-delay-1" href="projects/float-master.html">
+        <div class="pc-header"><span class="pc-num mono">07</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj7.name">GPU Combinatorial Optimizer</div>
+        <p class="pc-desc" data-i18n="proj7.desc">CUDA-accelerated tool for searching optimal combinations under numeric constraints and predicting resulting values.</p>
         <div class="chips-row"><span class="chip surface">Python</span><span class="chip surface">CUDA</span><span class="chip surface">GPU Computing</span><span class="chip surface">Algorithms</span></div>
       </a>
+      <a class="project-card reveal reveal-delay-2" href="projects/mmts-rework.html">
+        <div class="pc-header"><span class="pc-num mono">08</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj8.name">Corporate Website Rework</div>
+        <p class="pc-desc" data-i18n="proj8.desc">Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.</p>
+        <div class="chips-row"><span class="chip surface">HTML</span><span class="chip surface">CSS</span><span class="chip surface">JavaScript</span><span class="chip surface">i18n</span><span class="chip surface">UI</span></div>
+      </a>
       <a class="project-card reveal reveal-delay-3" href="projects/java-messenger.html">
-        <div class="pc-header"><span class="pc-num mono">06</span><span class="pc-arrow">↗</span></div>
-        <div class="pc-name" data-i18n="proj6.name">Java Spring Messenger</div>
-        <p class="pc-desc" data-i18n="proj6.desc">Educational backend project with user accounts, messaging logic, REST API and server-side application structure built with Java Spring.</p>
+        <div class="pc-header"><span class="pc-num mono">09</span><span class="pc-arrow">↗</span></div>
+        <div class="pc-name" data-i18n="proj9.name">Java Spring Messenger</div>
+        <p class="pc-desc" data-i18n="proj9.desc">Educational backend project with user accounts, messaging logic, REST API and server-side application structure built with Java Spring.</p>
         <div class="chips-row"><span class="chip surface">Java</span><span class="chip surface">Spring Boot</span><span class="chip surface">REST API</span><span class="chip surface">Backend</span></div>
       </a>
     </div>
@@ -372,6 +421,8 @@
   <a class="footer-logo" href="index.html">Houwy<span class="dot">.</span></a>
   <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
 </footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
 <script src="assets/common.js"></script>
 </body>

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../assets/m3.css">
 </head>
 <body>
+<div class="scroll-progress" id="scrollProgress"></div>
 <div class="noise-overlay"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -19,7 +20,7 @@
     <li><a href="../index.html#skills"   data-i18n="nav.skills">Skills</a></li>
     <li><a href="../index.html#projects" data-i18n="nav.projects">Projects</a></li>
     <li><a href="../index.html#contact"  data-i18n="nav.contact">Contact</a></li>
-    <li><a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://github.com/HouwyTwitch/mmts-website-rework" target="_blank">GitHub ↗</a></li>
   </ul>
   <div class="top-bar-actions">
     <div class="seg-btn">
@@ -34,7 +35,7 @@
   <a href="../index.html#skills"   data-i18n="nav.skills">Skills</a>
   <a href="../index.html#projects" data-i18n="nav.projects">Projects</a>
   <a href="../index.html#contact"  data-i18n="nav.contact">Contact</a>
-  <a href="https://github.com/HouwyTwitch" target="_blank">GitHub ↗</a>
+  <a href="https://github.com/HouwyTwitch/mmts-website-rework" target="_blank">GitHub ↗</a>
 </nav>
 
 <div class="proj-hero">
@@ -50,6 +51,7 @@
       <span class="chip secondary">JavaScript</span><span class="chip secondary">WebGL</span>
       <span class="chip surface">i18n</span><span class="chip surface">Security Headers</span>
     </div>
+    <a href="https://github.com/HouwyTwitch/mmts-website-rework" target="_blank" class="btn btn-filled" data-i18n="proj.viewgithub">View on GitHub ↗</a>
   </div>
 </div>
 
@@ -130,7 +132,8 @@ Referrer-Policy: strict-origin-when-cross-origin</pre>
     <div class="sidebar-card reveal">
       <div class="sidebar-card-title" data-i18n="proj.links">Links</div>
       <div class="sidebar-links">
-        <a class="sidebar-link" href="../index.html#projects"><span>← All projects</span><span class="sidebar-link-arr">←</span></a>
+        <a class="sidebar-link" href="https://github.com/HouwyTwitch/mmts-website-rework" target="_blank"><span data-i18n="proj.viewgithub">GitHub Repository</span><span class="sidebar-link-arr">↗</span></a>
+        <a class="sidebar-link" href="../index.html#projects"><span data-i18n="proj.back">← Projects</span><span class="sidebar-link-arr">←</span></a>
       </div>
     </div>
   </aside>
@@ -140,6 +143,9 @@ Referrer-Policy: strict-origin-when-cross-origin</pre>
   <a class="footer-logo" href="../index.html">Houwy<span class="dot">.</span></a>
   <span class="footer-copy" data-i18n="footer.copy">houwy.space - © 2026</span>
 </footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
 <script src="../assets/common.js"></script>
 </body>
 </html>
