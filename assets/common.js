@@ -22,7 +22,7 @@ const T = {
     'hero.cta1':     'View Projects',
     'hero.cta2':     'GitHub ↗',
     'hero.stat1':    'Repositories',
-    'hero.stat2':    'Open Projects',
+    'hero.stat2':    'Featured Projects',
 
     /* SKILLS */
     'skills.eyebrow':  'Specialization',
@@ -52,18 +52,24 @@ const T = {
     /* PROJECTS */
     'projects.eyebrow': 'Work',
     'projects.title':   'Selected Projects',
-    'proj1.name':  'Corporate Website Rework',
-    'proj1.desc':  'Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.',
-    'proj2.name':  'ML Anti-Phishing Extension',
-    'proj2.desc':  'Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection.',
-    'proj3.name':  'Desktop 2FA Authenticator',
-    'proj3.desc':  'Desktop application for managing multiple authenticator profiles, generating TOTP codes and handling secure local account data.',
-    'proj4.name':  'Android 2FA Authenticator',
-    'proj4.desc':  'Native Android application built with Kotlin and Jetpack Compose for managing authenticator profiles and time-based one-time passwords.',
-    'proj5.name':  'GPU Combinatorial Optimizer',
-    'proj5.desc':  'CUDA-accelerated tool for searching optimal combinations under numeric constraints and predicting resulting values.',
-    'proj6.name':  'Java Spring Messenger',
-    'proj6.desc':  'Educational backend project with user accounts, messaging logic, REST API and server-side application structure built with Java Spring.',
+    'proj1.name':  'Chromium TLS Fingerprint Engine',
+    'proj1.desc':  'Custom Chromium build exposing a CDP command to spoof JA3/JA3N TLS ClientHello fingerprints at runtime - cipher suites, curves, extension order - paired with a Python Playwright wrapper.',
+    'proj2.name':  'Post-Quantum Crypto Toolkit',
+    'proj2.desc':  'A modular Python toolkit for quantum-safe cryptography: post-quantum KEM key exchange, digital signatures and AEAD encryption with HKDF derivation, built on liboqs.',
+    'proj3.name':  'ML Anti-Phishing Extension',
+    'proj3.desc':  'Chromium extension and Python API server for URL reputation checks, blacklist/whitelist validation and ML-based phishing detection.',
+    'proj4.name':  'Desktop 2FA Authenticator',
+    'proj4.desc':  'Desktop application for managing multiple authenticator profiles, generating TOTP codes and handling secure local account data.',
+    'proj5.name':  'Android 2FA Authenticator',
+    'proj5.desc':  'Native Android application built with Kotlin and Jetpack Compose for managing authenticator profiles and time-based one-time passwords.',
+    'proj6.name':  'Multi-NTP Time Sync',
+    'proj6.desc':  'Windows desktop app that queries 150+ NTP servers concurrently and applies the median offset with microsecond precision. System tray, live clock and per-server diagnostics.',
+    'proj7.name':  'GPU Combinatorial Optimizer',
+    'proj7.desc':  'CUDA-accelerated tool for searching optimal combinations under numeric constraints and predicting resulting values.',
+    'proj8.name':  'Corporate Website Rework',
+    'proj8.desc':  'Static corporate website redesign with RU/EN localization, dark/light theme, responsive layout, interactive 3D network visualization, security headers and SEO files.',
+    'proj9.name':  'Java Spring Messenger',
+    'proj9.desc':  'Educational backend project with user accounts, messaging logic, REST API and server-side application structure built with Java Spring.',
 
     /* PRIVATE EXPERIENCE */
     'priv.eyebrow': 'Background',
@@ -102,6 +108,8 @@ const T = {
     'proj.storage':       'Storage',
     'proj.viewgithub':    'View on GitHub ↗',
     'proj.back':          '← Projects',
+    'proj.usage':         'Usage',
+    'proj.dataflow':      'Data flow',
 
     /* Desktop 2FA Authenticator */
     'msda.title':   'Desktop 2FA\nAuthenticator',
@@ -236,6 +244,60 @@ const T = {
     'jms.s3t':'REST API',          'jms.s3d':'Standard HTTP methods and status codes. JSON request/response. Input validation with Spring Validator.',
     'jms.s4t':'Spring architecture','jms.s4d':'Clean Controller → Service → Repository layering. Spring Data JPA with H2 (dev) and PostgreSQL (prod).',
     'jms.arch.title':   'Architecture',
+
+    /* Chromium TLS Fingerprint Engine */
+    'tls.title':   'Chromium TLS\nFingerprint Engine',
+    'tls.one':     'A custom Windows Chromium build that exposes a Chrome DevTools Protocol command to configure TLS ClientHello parameters - JA3/JA3N fingerprint spoofing - at runtime. Paired with a Python playwright_tls package.',
+    'tls.ov.b1':   'Anti-bot systems like Cloudflare, Akamai and DataDome fingerprint the TLS ClientHello to tell real browsers from automation. This project patches Chromium and BoringSSL to make that handshake fully controllable from your automation code.',
+    'tls.ov.b2':   'Parameters flow from Python through Playwright and CDP into the browser and network service, down to BoringSSL, producing a custom ClientHello on every HTTPS connection - no proxy or TLS-termination layer required.',
+    'tls.feat.title':'Key capabilities',
+    'tls.s1t':'Runtime control',        'tls.s1d':'Cipher suites, supported groups and curves, TLS version bounds and exact extension ordering - all set per session.',
+    'tls.s2t':'JA3 one-liner',          'tls.s2d':'Feed a standard JA3 string and the wrapper configures the whole handshake in a single call.',
+    'tls.s3t':'Browser presets',        'tls.s3d':'Ready-made fingerprints for Chrome, Firefox, Edge, Safari and curl.',
+    'tls.s4t':'Extension permutation',  'tls.s4d':'Per-connection randomisation matching Chrome 110+ behaviour, or a fixed order for older targets.',
+    'tls.s5t':'Playwright wrapper',     'tls.s5d':'Async and sync BrowserWithTLS helpers drop straight into existing Playwright automation.',
+    'tls.hw.title':'Data flow',
+    'tls.hw.s1t':'Python client', 'tls.hw.s1d':'Your script calls set_fingerprint() or set_ja3() on the BrowserWithTLS wrapper.',
+    'tls.hw.s2t':'CDP command',   'tls.hw.s2d':'The wrapper issues Emulation.setTLSFingerprint over the Chrome DevTools Protocol.',
+    'tls.hw.s3t':'Mojo IPC',      'tls.hw.s3d':'The browser process forwards the parameters to the network service through a Mojo interface.',
+    'tls.hw.s4t':'BoringSSL',     'tls.hw.s4d':'A patched SSL_set_extension_order() builds the custom ClientHello on every new socket.',
+    'tls.inst.title':'Build from source',
+    'tls.inst.body': 'Windows 10/11 x64 with roughly 250 GB of disk. The whole build is scripted in PowerShell:',
+    'tls.use.title':'Drive it from Python',
+    'tls.note':'Note: EC point formats beyond uncompressed are logged but not applied, and ALPN / HTTP-2 negotiation stays independent of the TLS fingerprint.',
+
+    /* Post-Quantum Crypto Toolkit */
+    'qrpt.title':  'Post-Quantum\nCrypto Toolkit',
+    'qrpt.one':    'A modular Python toolkit for quantum-safe cryptography - post-quantum key exchange, digital signatures and authenticated encryption behind a clean, validated API.',
+    'qrpt.ov.b1':  'Quantum computers threaten classical public-key cryptography. qrpt wraps post-quantum primitives from liboqs behind a small, safety-first API so applications can adopt quantum-resistant key exchange and signatures today.',
+    'qrpt.ov.b2':  'The design favours correctness and maintainability: strict input and nonce-length validation, slotted dataclasses to cut object overhead, and a repeatable benchmark runner to catch performance regressions.',
+    'qrpt.feat.title':'What it provides',
+    'qrpt.s1t':'KEM key exchange',     'qrpt.s1d':'Post-quantum Key Encapsulation Mechanism to establish a shared secret over an untrusted channel.',
+    'qrpt.s2t':'Digital signatures',   'qrpt.s2d':'Post-quantum sign and verify for message authenticity and integrity.',
+    'qrpt.s3t':'AEAD encryption',      'qrpt.s3d':'Authenticated encryption with associated data, with a fast path that avoids unnecessary byte copies.',
+    'qrpt.s4t':'HKDF derivation',      'qrpt.s4d':'Derives AEAD keys from a shared secret at roughly 0.007 ms per derivation.',
+    'qrpt.s5t':'High-level seal / open','qrpt.s5d':'One-call helpers that combine KEM, derivation and AEAD into a simple seal and open interface.',
+    'qrpt.inst.title':'Installation',
+    'qrpt.inst.body': 'Requires Python 3.11+. AEAD works out of the box; post-quantum features pull in the optional oqs binding.',
+    'qrpt.use.title':'Encrypt with a shared secret',
+
+    /* Multi-NTP Time Sync */
+    'nts.title':   'Multi-NTP\nTime Sync',
+    'nts.one':     'A Windows desktop app that synchronises the system clock against many NTP servers at once and applies the median offset with microsecond precision.',
+    'nts.ov.b1':   'Rather than trusting a single time source, the tool queries dozens of servers concurrently and takes the median offset, so one misbehaving or drifting server cannot skew the result.',
+    'nts.ov.b2':   'Corrections are written through the Windows FILETIME API at 100-nanosecond resolution, with rounding applied before scaling to avoid floating-point drift. A live clock updates at 30 fps.',
+    'nts.feat.title':'Key capabilities',
+    'nts.s1t':'Multi-server median',   'nts.s1d':'Queries all active servers simultaneously and uses the median offset to reject outliers.',
+    'nts.s2t':'Microsecond precision', 'nts.s2d':'Offsets shown in microseconds; time set via Windows FILETIME at 100 ns resolution.',
+    'nts.s3t':'150+ server catalog',   'nts.s3d':'Google, Cloudflare, Amazon, NIST, Apple and regional pools built in - add your own too.',
+    'nts.s4t':'Background sync',        'nts.s4d':'Configurable auto-sync interval from 30 seconds to 1 hour while minimised to the system tray.',
+    'nts.s5t':'Live diagnostics',      'nts.s5d':'Per-server status, offset, round-trip time and stratum, with dark and light themes.',
+    'nts.hw.title':'How it works',
+    'nts.hw.s1t':'Concurrent query', 'nts.hw.s1d':'All servers receive NTP v4 requests through a thread pool, capturing offset, delay and stratum.',
+    'nts.hw.s2t':'Median offset',    'nts.hw.s2d':'Responses with stratum above 4 or errors are dropped; the median of the rest is taken.',
+    'nts.hw.s3t':'Apply correction', 'nts.hw.s3d':'Current UTC plus the median offset is converted to FILETIME and written with SetSystemTimeAsFileTime.',
+    'nts.hw.s4t':'Report accuracy',  'nts.hw.s4d':'Displayed as half the average round-trip delay - the theoretical one-way uncertainty.',
+    'nts.inst.title':'Running locally',
   },
 
   ru: {
@@ -256,7 +318,7 @@ const T = {
     'hero.cta1':    'Смотреть проекты',
     'hero.cta2':    'GitHub ↗',
     'hero.stat1':   'Репозиториев',
-    'hero.stat2':   'Открытых проектов',
+    'hero.stat2':   'Избранных проектов',
 
     /* SKILLS */
     'skills.eyebrow': 'Специализация',
@@ -286,18 +348,24 @@ const T = {
     /* PROJECTS */
     'projects.eyebrow': 'Работы',
     'projects.title':   'Избранные проекты',
-    'proj1.name':  'Редизайн корпоративного сайта',
-    'proj1.desc':  'Статический корпоративный сайт с локализацией RU/EN, тёмной/светлой темой, адаптивной вёрсткой, 3D-визуализацией сети, security-заголовками и SEO-файлами.',
-    'proj2.name':  'ML Антифишинговое расширение',
-    'proj2.desc':  'Chromium-расширение и Python API-сервер для проверки репутации URL, валидации чёрного/белого списков и ML-детекции фишинга.',
-    'proj3.name':  'Desktop 2FA Аутентификатор',
-    'proj3.desc':  'Десктопное приложение для управления несколькими профилями аутентификаторов, генерации TOTP-кодов и безопасного хранения данных аккаунтов.',
-    'proj4.name':  'Android 2FA Аутентификатор',
-    'proj4.desc':  'Нативное Android-приложение на Kotlin и Jetpack Compose для управления профилями аутентификаторов и одноразовыми паролями.',
-    'proj5.name':  'GPU Комбинаторный оптимизатор',
-    'proj5.desc':  'CUDA-ускоренный инструмент для поиска оптимальных комбинаций под числовые ограничения и предсказания результирующих значений.',
-    'proj6.name':  'Java Spring Мессенджер',
-    'proj6.desc':  'Учебный backend-проект: аккаунты пользователей, логика сообщений, REST API и серверная архитектура на Java Spring.',
+    'proj1.name':  'Движок TLS-фингерпринтов Chromium',
+    'proj1.desc':  'Кастомная сборка Chromium с CDP-командой для подмены JA3/JA3N TLS ClientHello-фингерпринтов на лету - наборы шифров, кривые, порядок расширений - с Python-обёрткой для Playwright.',
+    'proj2.name':  'Пост-квантовый крипто-тулкит',
+    'proj2.desc':  'Модульный Python-тулкит для квантово-устойчивой криптографии: пост-квантовый обмен ключами KEM, цифровые подписи и AEAD-шифрование с деривацией HKDF на базе liboqs.',
+    'proj3.name':  'ML Антифишинговое расширение',
+    'proj3.desc':  'Chromium-расширение и Python API-сервер для проверки репутации URL, валидации чёрного/белого списков и ML-детекции фишинга.',
+    'proj4.name':  'Desktop 2FA Аутентификатор',
+    'proj4.desc':  'Десктопное приложение для управления несколькими профилями аутентификаторов, генерации TOTP-кодов и безопасного хранения данных аккаунтов.',
+    'proj5.name':  'Android 2FA Аутентификатор',
+    'proj5.desc':  'Нативное Android-приложение на Kotlin и Jetpack Compose для управления профилями аутентификаторов и одноразовыми паролями.',
+    'proj6.name':  'Multi-NTP синхронизация времени',
+    'proj6.desc':  'Windows-приложение, опрашивающее 150+ NTP-серверов одновременно и применяющее медианное смещение с микросекундной точностью. Системный трей, живые часы и диагностика по каждому серверу.',
+    'proj7.name':  'GPU Комбинаторный оптимизатор',
+    'proj7.desc':  'CUDA-ускоренный инструмент для поиска оптимальных комбинаций под числовые ограничения и предсказания результирующих значений.',
+    'proj8.name':  'Редизайн корпоративного сайта',
+    'proj8.desc':  'Статический корпоративный сайт с локализацией RU/EN, тёмной/светлой темой, адаптивной вёрсткой, 3D-визуализацией сети, security-заголовками и SEO-файлами.',
+    'proj9.name':  'Java Spring Мессенджер',
+    'proj9.desc':  'Учебный backend-проект: аккаунты пользователей, логика сообщений, REST API и серверная архитектура на Java Spring.',
 
     /* PRIVATE EXPERIENCE */
     'priv.eyebrow': 'Опыт',
@@ -336,6 +404,8 @@ const T = {
     'proj.storage':      'Хранение данных',
     'proj.viewgithub':   'Открыть на GitHub ↗',
     'proj.back':         '← Проекты',
+    'proj.usage':        'Использование',
+    'proj.dataflow':     'Поток данных',
 
     /* Desktop 2FA Authenticator */
     'msda.title':   'Desktop 2FA\nАутентификатор',
@@ -470,6 +540,60 @@ const T = {
     'jms.s3t':'REST API',                'jms.s3d':'Стандартные HTTP-методы и коды статусов. JSON запрос/ответ. Валидация входных данных Spring Validator.',
     'jms.s4t':'Архитектура Spring',      'jms.s4d':'Чёткое разделение Controller → Service → Repository. Spring Data JPA с H2 (dev) и PostgreSQL (prod).',
     'jms.arch.title':   'Архитектура',
+
+    /* Движок TLS-фингерпринтов Chromium */
+    'tls.title':   'Движок TLS-фингерпринтов\nChromium',
+    'tls.one':     'Кастомная сборка Chromium для Windows, открывающая команду Chrome DevTools Protocol для настройки параметров TLS ClientHello - подмены JA3/JA3N-фингерпринта - на лету. В комплекте Python-пакет playwright_tls.',
+    'tls.ov.b1':   'Анти-бот системы вроде Cloudflare, Akamai и DataDome снимают отпечаток TLS ClientHello, чтобы отличить настоящий браузер от автоматизации. Проект патчит Chromium и BoringSSL, делая это рукопожатие полностью управляемым из вашего кода.',
+    'tls.ov.b2':   'Параметры идут из Python через Playwright и CDP в браузер и сетевой сервис, вплоть до BoringSSL, формируя кастомный ClientHello на каждое HTTPS-соединение - без прокси и слоя терминации TLS.',
+    'tls.feat.title':'Ключевые возможности',
+    'tls.s1t':'Управление на лету',       'tls.s1d':'Наборы шифров, поддерживаемые группы и кривые, границы версии TLS и точный порядок расширений - всё задаётся для сессии.',
+    'tls.s2t':'JA3 одной строкой',        'tls.s2d':'Передайте стандартную JA3-строку, и обёртка настроит всё рукопожатие одним вызовом.',
+    'tls.s3t':'Пресеты браузеров',        'tls.s3d':'Готовые фингерпринты для Chrome, Firefox, Edge, Safari и curl.',
+    'tls.s4t':'Перестановка расширений',  'tls.s4d':'Рандомизация на каждое соединение как в Chrome 110+, либо фиксированный порядок для старых целей.',
+    'tls.s5t':'Обёртка для Playwright',   'tls.s5d':'Async- и sync-хелперы BrowserWithTLS встраиваются прямо в существующую автоматизацию Playwright.',
+    'tls.hw.title':'Поток данных',
+    'tls.hw.s1t':'Python-клиент', 'tls.hw.s1d':'Ваш скрипт вызывает set_fingerprint() или set_ja3() у обёртки BrowserWithTLS.',
+    'tls.hw.s2t':'CDP-команда',   'tls.hw.s2d':'Обёртка отправляет Emulation.setTLSFingerprint по Chrome DevTools Protocol.',
+    'tls.hw.s3t':'Mojo IPC',      'tls.hw.s3d':'Процесс браузера передаёт параметры в сетевой сервис через интерфейс Mojo.',
+    'tls.hw.s4t':'BoringSSL',     'tls.hw.s4d':'Пропатченный SSL_set_extension_order() собирает кастомный ClientHello на каждом новом сокете.',
+    'tls.inst.title':'Сборка из исходников',
+    'tls.inst.body': 'Windows 10/11 x64 и около 250 ГБ на диске. Вся сборка автоматизирована в PowerShell:',
+    'tls.use.title':'Управление из Python',
+    'tls.note':'Примечание: форматы EC point кроме uncompressed логируются, но не применяются, а согласование ALPN / HTTP-2 не зависит от TLS-фингерпринта.',
+
+    /* Пост-квантовый крипто-тулкит */
+    'qrpt.title':  'Пост-квантовый\nкрипто-тулкит',
+    'qrpt.one':    'Модульный Python-тулкит для квантово-устойчивой криптографии - пост-квантовый обмен ключами, цифровые подписи и аутентифицированное шифрование за чистым, проверяемым API.',
+    'qrpt.ov.b1':  'Квантовые компьютеры угрожают классической криптографии с открытым ключом. qrpt оборачивает пост-квантовые примитивы из liboqs в небольшой API с упором на безопасность, позволяя внедрить квантово-устойчивый обмен ключами и подписи уже сейчас.',
+    'qrpt.ov.b2':  'Дизайн ставит во главу корректность и поддерживаемость: строгая валидация входных данных и длины nonce, dataclasses со slots для снижения накладных расходов и воспроизводимый бенчмарк для отлова регрессий производительности.',
+    'qrpt.feat.title':'Что внутри',
+    'qrpt.s1t':'Обмен ключами KEM',      'qrpt.s1d':'Пост-квантовый механизм инкапсуляции ключа для установления общего секрета по недоверенному каналу.',
+    'qrpt.s2t':'Цифровые подписи',       'qrpt.s2d':'Пост-квантовые подпись и проверка для аутентичности и целостности сообщений.',
+    'qrpt.s3t':'AEAD-шифрование',        'qrpt.s3d':'Аутентифицированное шифрование с привязанными данными и быстрым путём без лишних копий байтов.',
+    'qrpt.s4t':'Деривация HKDF',         'qrpt.s4d':'Выводит AEAD-ключи из общего секрета примерно за 0.007 мс на деривацию.',
+    'qrpt.s5t':'Высокоуровневые seal / open','qrpt.s5d':'Хелперы одного вызова, объединяющие KEM, деривацию и AEAD в простой интерфейс seal и open.',
+    'qrpt.inst.title':'Установка',
+    'qrpt.inst.body': 'Требуется Python 3.11+. AEAD работает сразу; пост-квантовые функции подтягивают опциональный пакет oqs.',
+    'qrpt.use.title':'Шифрование общим секретом',
+
+    /* Multi-NTP синхронизация времени */
+    'nts.title':   'Multi-NTP\nсинхронизация',
+    'nts.one':     'Windows-приложение, синхронизирующее системные часы сразу по множеству NTP-серверов и применяющее медианное смещение с микросекундной точностью.',
+    'nts.ov.b1':   'Вместо доверия одному источнику времени инструмент опрашивает десятки серверов одновременно и берёт медианное смещение, поэтому один сбойный или уплывающий сервер не исказит результат.',
+    'nts.ov.b2':   'Коррекции пишутся через Windows FILETIME API с разрешением 100 наносекунд, с округлением до масштабирования во избежание дрейфа чисел с плавающей точкой. Живые часы обновляются на 30 fps.',
+    'nts.feat.title':'Ключевые возможности',
+    'nts.s1t':'Медиана по серверам',     'nts.s1d':'Опрашивает все активные серверы одновременно и берёт медианное смещение для отсечения выбросов.',
+    'nts.s2t':'Микросекундная точность', 'nts.s2d':'Смещения в микросекундах; время выставляется через Windows FILETIME с разрешением 100 нс.',
+    'nts.s3t':'Каталог 150+ серверов',   'nts.s3d':'Google, Cloudflare, Amazon, NIST, Apple и региональные пулы встроены - можно добавить свои.',
+    'nts.s4t':'Фоновая синхронизация',   'nts.s4d':'Настраиваемый интервал авто-синхронизации от 30 секунд до 1 часа в свёрнутом в трей виде.',
+    'nts.s5t':'Живая диагностика',       'nts.s5d':'Статус, смещение, round-trip и stratum по каждому серверу, с тёмной и светлой темами.',
+    'nts.hw.title':'Как это работает',
+    'nts.hw.s1t':'Одновременный опрос', 'nts.hw.s1d':'Все серверы получают NTP v4-запросы через пул потоков с захватом смещения, задержки и stratum.',
+    'nts.hw.s2t':'Медианное смещение',  'nts.hw.s2d':'Ответы со stratum выше 4 или ошибки отбрасываются; берётся медиана остальных.',
+    'nts.hw.s3t':'Применение коррекции','nts.hw.s3d':'Текущий UTC плюс медианное смещение переводится в FILETIME и пишется через SetSystemTimeAsFileTime.',
+    'nts.hw.s4t':'Оценка точности',     'nts.hw.s4d':'Показывается как половина средней round-trip задержки - теоретическая односторонняя погрешность.',
+    'nts.inst.title':'Запуск локально',
   }
 };
 
@@ -662,6 +786,76 @@ function initAccordion() {
   });
 }
 
+/* ── Motion / pointer preferences ─────────────────────────── */
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE_POINTER  = window.matchMedia('(pointer: fine)').matches;
+
+/* ── Scroll progress bar ──────────────────────────────────── */
+function initScrollProgress() {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
+/* ── Card spotlight (cursor-tracked glow) ─────────────────── */
+function initSpotlight() {
+  if (!FINE_POINTER) return;
+  document.querySelectorAll('.project-card, .skill-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+    });
+  });
+}
+
+/* ── Hero card 3D tilt ────────────────────────────────────── */
+function initTilt() {
+  if (!FINE_POINTER || REDUCE_MOTION) return;
+  const card = document.querySelector('.hero-card');
+  const wrap = document.querySelector('.hero-visual');
+  if (!card || !wrap) return;
+  wrap.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const cx = (e.clientX - r.left) / r.width  - 0.5;
+    const cy = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `rotateY(${cx * 7}deg) rotateX(${-cy * 7}deg)`;
+  });
+  wrap.addEventListener('mouseleave', () => { card.style.transform = ''; });
+}
+
+/* ── Magnetic primary buttons ─────────────────────────────── */
+function initMagnetic() {
+  if (!FINE_POINTER || REDUCE_MOTION) return;
+  document.querySelectorAll('.fab, .btn-filled').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const mx = e.clientX - r.left - r.width  / 2;
+      const my = e.clientY - r.top  - r.height / 2;
+      el.style.transform = `translate(${mx * 0.22}px, ${my * 0.32}px) scale(1.03)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+}
+
+/* ── Scroll-to-top button ─────────────────────────────────── */
+function initToTop() {
+  const btn = document.getElementById('toTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('show', window.scrollY > 640);
+  toggle();
+  window.addEventListener('scroll', toggle, { passive: true });
+  btn.addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: REDUCE_MOTION ? 'auto' : 'smooth' }));
+}
+
 /* ── Page-specific init ───────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -671,10 +865,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initTerminal('termOut');
   initAccordion();
+  initScrollProgress();
+  initSpotlight();
+  initTilt();
+  initMagnetic();
+  initToTop();
 
   // Hero stats counter
   const stat1 = document.getElementById('stat1');
   const stat2 = document.getElementById('stat2');
-  if (stat1) setTimeout(() => { countUp(stat1, 20, '+'); }, 800);
-  if (stat2) setTimeout(() => { countUp(stat2, 6, '+'); }, 1000);
+  if (stat1) setTimeout(() => { countUp(stat1, 60, '+'); }, 800);
+  if (stat2) setTimeout(() => { countUp(stat2, 9, '+'); }, 1000);
 });
